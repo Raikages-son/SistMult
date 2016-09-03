@@ -30,5 +30,9 @@ BmpImage::BmpImage(const char *Path){
     cout << "Map's offset: "<< offBytes << endl;
     cout << "Width is: "<< width << endl;
     cout << "Height is: "<< height << endl;
+
+    unsigned char map[width][height];
+
+
 }
 

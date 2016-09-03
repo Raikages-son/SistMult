@@ -6,15 +6,14 @@
 using namespace::std;
 
 class BmpImage{
-public:
-    static const unsigned short HEADER_SIZE = 54;
-
 private:
+    // FILE HEADER
     unsigned short type = 16973;
     unsigned int fileSize;
     unsigned int reserved = 0;
     unsigned int offBytes = 1078;
 
+    // INFO HEADER
     unsigned int infoSize = 40;
     unsigned int width;
     unsigned int height;
@@ -26,6 +25,9 @@ private:
     unsigned int yResolution = 0;
     unsigned int usedColor = 0;
     unsigned int importantColor = 0;
+
+    // Pixel map
+    unsigned char *bitmap;
 
 public:
     BmpImage();
