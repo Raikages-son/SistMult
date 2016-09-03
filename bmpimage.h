@@ -7,13 +7,18 @@ using namespace::std;
 
 class BmpImage{
 private:
-    // FILE HEADER
+    //FILEHEADER
+    unsigned char FILE_HEADER[14];
+    // DATI DEL FILE HEADER
     unsigned short type = 16973;
     unsigned int fileSize;
     unsigned int reserved = 0;
     unsigned int offBytes = 1078;
 
-    // INFO HEADER
+
+    // INFOHEADER
+    unsigned char INFO_HEADER[40];
+    // DATI DEL INFO HEADER
     unsigned int infoSize = 40;
     unsigned int width;
     unsigned int height;
@@ -26,13 +31,18 @@ private:
     unsigned int usedColor = 0;
     unsigned int importantColor = 0;
 
-    // Pixel map
+    // PALETTE
+    unsigned char PALETTE[1024];
+
+    // MAPPA DEI PIXEL
     unsigned char *bitmap;
 
 public:
     BmpImage();
 
     BmpImage(const char* Path);
+
+    void save(const char* Path);
 };
 
 #endif // BMPIMAGE_H

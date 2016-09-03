@@ -4,8 +4,9 @@
 using namespace std;
 
 int main(int argc, char *argv[]){
-    cout << "Hello World!" << endl;
-    BmpImage bmp("D:\\DatiPaolo\\Documents\\progetti\\SistemiMultimediali\\dist512.bmp");
+    BmpImage bmp("D:\\DatiPaolo\\Documents\\progetti\\SistMult\\kimi512.bmp");
 
+    // non salva correttamente
+    bmp.save("D:\\DatiPaolo\\Documents\\progetti\\SistMult\\output.bmp");
     return 0;
 }
