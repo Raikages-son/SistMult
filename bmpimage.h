@@ -32,10 +32,10 @@ private:
     unsigned int importantColor = 0;
 
     // PALETTE
-    unsigned char PALETTE[1024];
+    unsigned char* PALETTE;
 
     // MAPPA DEI PIXEL
-    unsigned char *bitmap;
+    unsigned char *Bitmap;
 
 public:
     BmpImage();
@@ -43,6 +43,11 @@ public:
     BmpImage(const char* Path);
 
     void save(const char* Path);
+
+    void mirror();
+
+private:
+    int getBytesPerRow();
 };
 
 #endif // BMPIMAGE_H

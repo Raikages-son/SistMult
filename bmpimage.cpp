@@ -7,97 +7,90 @@ BmpImage::BmpImage(){
 BmpImage::BmpImage(const char *Path){
     FILE *file;
     // apertura del file e controllo esistenza
-    if ( (file=fopen(Path,"rb"))==NULL ){
+    if ((file=fopen(Path,"rb"))==NULL ){
         cout << "File not found" << endl;
         exit(1);
     }
 
-    // input delle parti degli header
-    for(int i = 0; i<14; i++){
-        fread(&FILE_HEADER[i],1,sizeof(char),file);
-    }
-    for(int i = 0; i<40; i++){
-        fread(&INFO_HEADER[i],1,sizeof(char),file);
-    }
-    for(int i = 0; i<1024; i++){
-        fread(&PALETTE[i],1,sizeof(char),file);
-    }
-
-
     // input dei dati del fileheader
     fseek(file,0,0);
-    fread(&type,1,sizeof(short), file);
-    fread(&fileSize, 1, sizeof(int), file);
+    fread(&type,sizeof(short),1, file);
+    fread(&fileSize,sizeof(int),1, file);
 
     fseek(file,10,0);
-    fread(&offBytes, 1, sizeof(int), file);
+    fread(&offBytes,sizeof(int),1, file);
 
 
     // input dei dati dell'infoheader
 
-    fread(&infoSize,1,sizeof(int),file);
-    fread(&width, 1, sizeof(int), file);
-    fread(&height, 1, sizeof(int), file);
-    fread(&planes,1, sizeof(short), file);
-    fread(&bit_X_pixel,1, sizeof(short), file);
-    fread(&compression,1, sizeof(int), file);
-    fread(&imageSize,1, sizeof(int), file);
+    fread(&infoSize,sizeof(int),1,file);
+    fread(&width,sizeof(int),1, file);
+    fread(&height,sizeof(int),1, file);
+    fread(&planes,sizeof(short),1, file);
+    fread(&bit_X_pixel,sizeof(short),1, file);
+    fread(&compression,sizeof(int),1, file);
+    fread(&imageSize,sizeof(int),1, file);
 
-    cout << "Map's offset: "<< offBytes << endl;
-    cout << "Width is: "<< width << endl;
-    cout << "Height is: "<< height << endl;
+    // input delle parti degli header
+    fseek(file,0,0);
 
-    cout << "Using : "<< bit_X_pixel << " bit to encode a pixel" << endl;
+    fread(FILE_HEADER,sizeof(char),14,file);
 
-    // larghezza in byte
-    int byteWidth = width*(bit_X_pixel/8);
+    fread(INFO_HEADER,sizeof(char),40,file);
 
-    int extraBytes = 0;
-    for (;(byteWidth+extraBytes)%4 != 0; extraBytes++);
+    PALETTE = new unsigned char[offBytes-54];
 
-    cout << "Width in bytes: "<< byteWidth << endl;
-    cout << "Extra Bytes in a row: "<< extraBytes <<endl;
+    fread(PALETTE,sizeof(char),(offBytes-54),file);
 
-    // lettura pixels
+    // input della mappa dei pixel
 
-    unsigned char map[(byteWidth+extraBytes)*height];
+    fseek(file,offBytes,0);
+    // do la dimensione alla mappa
+    Bitmap = new unsigned char[getBytesPerRow()*height];
 
-    for (int i=0; i<height; i++ ) {
-        unsigned char* data = new unsigned char[byteWidth+extraBytes];
-        fread( data, sizeof(unsigned char), byteWidth+extraBytes, file);
-
-        // ATTENZIONE CHE I PIXELS SONO CODIFICATI IN BGR E NON RGB;
-    }
-
-    fclose(file); //chiusura del file
+    fread(Bitmap,sizeof(char), getBytesPerRow()*height, file);
+    fclose(file);
 }
 
 void BmpImage::save(const char *Path){
-    FILE *file = fopen(Path, "wb");
-    if(file == NULL) {
+    cout << " scrivo su: "<< Path << endl;
+    FILE *outFile = fopen(Path, "wb");
+    if(outFile == NULL) {
         cout << "Can't create file" << endl;
         exit(1);
     }
 
     // stampo l'header
-    fwrite(FILE_HEADER, 14, 1, file);
-    fwrite(INFO_HEADER, 40, 1, file);
-    fwrite(PALETTE, 1024, 1,file);
+    fwrite(FILE_HEADER, sizeof(char), 14 , outFile);
+    fwrite(INFO_HEADER, sizeof(char), 40, outFile);
+    fwrite(PALETTE, sizeof(char), offBytes-54,outFile);
 
 
+    // stampo la mappa
+
+    fwrite(Bitmap,sizeof(char), getBytesPerRow()*height, outFile);
+    fclose(outFile);
+
+}
+
+// é sono un abbozzo!
+void BmpImage::mirror(){
+    unsigned char Temp[getBytesPerRow()*height];
+    for(int j =0; j < height; j++){
+        for(int i = 0; i < getBytesPerRow(); i++){
+            Temp[j*getBytesPerRow() + i] = Bitmap[j*getBytesPerRow() + (getBytesPerRow()-i)];
+        }
+    }
+    Bitmap = Temp;
+}
+
+// funzione che calcola il numero di byte per riga, considerando anche quelli di padding
+int BmpImage::getBytesPerRow(){
     int byteWidth = width*(bit_X_pixel/8);
 
     int extraBytes = 0;
     for (;(byteWidth+extraBytes)%4 != 0; extraBytes++);
 
-    byteWidth += extraBytes;
-
-    int totalBytes = byteWidth*height;
-
-    // stampo la mappa
-    fwrite(bitmap,totalBytes,1,file);
-
-    fclose(file);
-
+    return byteWidth + extraBytes;
 }
 
