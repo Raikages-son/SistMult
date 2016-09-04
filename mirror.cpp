@@ -26,7 +26,20 @@ void Mirror::applyMirroring(BmpImage image){
         cout << "Mirroring not supported yet for 4 bpp bitmaps" << endl;
     }
     else if (bpp == 8){
-        cout << "Mirroring not supported yet for 8 bpp bitmaps" << endl;
+        unsigned char auxPixel;
+
+        for(int j = 0; j<imageH; j++){
+            int lastPixel = (j+1)*bpr - paddingBytes -1;
+            // scorro i pixel della riga fino a metà
+            for(int i = 0; i<=(bpr - paddingBytes)/2; i++){
+                // salvo il pixel nel byte ausiliario
+                auxPixel = Map[j*bpr + i];
+                // imposto il pixel uguale al pixel simmetricamente opposto
+                Map[j*bpr + i] = Map[lastPixel - i];
+                // imposto il pixel simmetricamente opposto con l'array ausiliario
+                Map[lastPixel - i] = auxPixel;
+            }
+        }
     }
     else if (bpp == 16){
         cout << "Mirroring not supported yet for 16 bpp bitmaps" << endl;

@@ -71,23 +71,6 @@ void BmpImage::save(const char *Path){
     fclose(outFile);
 
 }
-/*
-// é sono un abbozzo!
-void BmpImage::mirror(){
-    cout << "bytes per row: " << getBytesPerRow() << endl;
-    cout << "width * 3: " << width*3 << endl;
-    unsigned char Temp[getBytesPerRow()*height];
-    for(int j =0; j < height; j++){
-        for(int i = 0; i < getBytesPerRow(); i+=3){
-            int aux = (j+1)*getBytesPerRow()-3;
-            Temp[(j*getBytesPerRow() + (i))] = Bitmap[aux-i];
-            Temp[(j*getBytesPerRow() + (i+1))] = Bitmap[aux-(i-1)];
-            Temp[(j*getBytesPerRow() + (i+2))] = Bitmap[aux-(i-2)];
-        }
-    }
-    for(int i = 0; i<(height*width*3);i++)
-        Bitmap[i] = Temp[i];
-}*/
 
 // funzione che calcola il numero di byte di padding
 int BmpImage::getPadding(){
