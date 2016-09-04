@@ -27,7 +27,7 @@ BmpImage::BmpImage(const char *Path){
     fread(&width,sizeof(int),1, file);
     fread(&height,sizeof(int),1, file);
     fread(&planes,sizeof(short),1, file);
-    fread(&bit_X_pixel,sizeof(short),1, file);
+    fread(&bpp,sizeof(short),1, file);
     fread(&compression,sizeof(int),1, file);
     fread(&imageSize,sizeof(int),1, file);
 
@@ -46,14 +46,13 @@ BmpImage::BmpImage(const char *Path){
 
     fseek(file,offBytes,0);
     // do la dimensione alla mappa
-    Bitmap = new unsigned char[getBytesPerRow()*height];
+    Bitmap = new unsigned char[(width*bpp + getPadding())*height];
 
-    fread(Bitmap,sizeof(char), getBytesPerRow()*height, file);
+    fread(Bitmap,sizeof(char), (width*bpp + getPadding())*height, file);
     fclose(file);
 }
 
 void BmpImage::save(const char *Path){
-    cout << " scrivo su: "<< Path << endl;
     FILE *outFile = fopen(Path, "wb");
     if(outFile == NULL) {
         cout << "Can't create file" << endl;
@@ -68,29 +67,35 @@ void BmpImage::save(const char *Path){
 
     // stampo la mappa
 
-    fwrite(Bitmap,sizeof(char), getBytesPerRow()*height, outFile);
+    fwrite(Bitmap,sizeof(char), (width*bpp + getPadding())*height, outFile);
     fclose(outFile);
 
 }
-
+/*
 // é sono un abbozzo!
 void BmpImage::mirror(){
+    cout << "bytes per row: " << getBytesPerRow() << endl;
+    cout << "width * 3: " << width*3 << endl;
     unsigned char Temp[getBytesPerRow()*height];
     for(int j =0; j < height; j++){
-        for(int i = 0; i < getBytesPerRow(); i++){
-            Temp[j*getBytesPerRow() + i] = Bitmap[j*getBytesPerRow() + (getBytesPerRow()-i)];
+        for(int i = 0; i < getBytesPerRow(); i+=3){
+            int aux = (j+1)*getBytesPerRow()-3;
+            Temp[(j*getBytesPerRow() + (i))] = Bitmap[aux-i];
+            Temp[(j*getBytesPerRow() + (i+1))] = Bitmap[aux-(i-1)];
+            Temp[(j*getBytesPerRow() + (i+2))] = Bitmap[aux-(i-2)];
         }
     }
-    Bitmap = Temp;
-}
+    for(int i = 0; i<(height*width*3);i++)
+        Bitmap[i] = Temp[i];
+}*/
 
-// funzione che calcola il numero di byte per riga, considerando anche quelli di padding
-int BmpImage::getBytesPerRow(){
-    int byteWidth = width*(bit_X_pixel/8);
+// funzione che calcola il numero di byte di padding
+int BmpImage::getPadding(){
+    int byteWidth = width*(bpp/8);
 
     int extraBytes = 0;
     for (;(byteWidth+extraBytes)%4 != 0; extraBytes++);
 
-    return byteWidth + extraBytes;
+    return extraBytes;
 }
 

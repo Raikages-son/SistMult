@@ -23,7 +23,7 @@ private:
     unsigned int width;
     unsigned int height;
     unsigned short planes = 1;
-    unsigned short bit_X_pixel;
+    unsigned short bpp;
     unsigned int compression = 0;
     unsigned int imageSize;
     unsigned int xResolution = 0;
@@ -44,10 +44,14 @@ public:
 
     void save(const char* Path);
 
-    void mirror();
+    unsigned int getWidth(){return width;}
+    unsigned int getHeight(){return height;}
+    unsigned int getOffset(){return offBytes;}
+    unsigned short getBPP(){return bpp;}
 
-private:
-    int getBytesPerRow();
+    int getPadding();
+
+    unsigned char *getMap(){return Bitmap;}
 };
 
 #endif // BMPIMAGE_H
