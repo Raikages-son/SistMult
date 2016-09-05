@@ -1,7 +1,7 @@
 #ifndef MIRROR_H
 #define MIRROR_H
 
-#include <bmpimage.h>
+#include "bmpimage.h"
 
 class Mirror
 {
