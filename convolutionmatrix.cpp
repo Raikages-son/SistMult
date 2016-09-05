@@ -4,7 +4,7 @@ ConvolutionMatrix::ConvolutionMatrix(){
 
 }
 
-void ConvolutionMatrix::apply3x3Mask(BmpImage image, const int *Matrix){
+void ConvolutionMatrix::apply3x3Mask(BmpImage image, const int *Matrix){/*
     // prendo l'altezza della mappa in pixel
     int imageH = image.getHeight();
     // prendo la larghezza della mappa in pixel
@@ -44,7 +44,7 @@ void ConvolutionMatrix::apply3x3Mask(BmpImage image, const int *Matrix){
                                   };
 
                 for(int t = 0; t < 9; t++){
-                    if(Indexes[t]<0 || Indexes[t]>=imageH*bpr){
+                    if(Indexes[t]<0 || Indexes[t]>=imageH*bpr ){
                         Aux[t] = Map[Indexes[4]]*Matrix[t];
                     }
                     else{
@@ -71,6 +71,6 @@ void ConvolutionMatrix::apply3x3Mask(BmpImage image, const int *Matrix){
         for(int i = 0; i<(imageH*bpr);i++){
             Map[i] = Temp[i];
         }
-    }
+    }*/
 
 }

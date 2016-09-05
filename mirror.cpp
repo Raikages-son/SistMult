@@ -4,7 +4,7 @@ Mirror::Mirror(){
 
 }
 
-void Mirror::applyMirroring(BmpImage image){
+void Mirror::applyMirroring(BmpImage image){/*
     // prendo l'altezza della mappa in pixel
     int imageH = image.getHeight();
     // prendo la larghezza della mappa in pixel
@@ -71,7 +71,7 @@ void Mirror::applyMirroring(BmpImage image){
                     Map[lastPixel - i + t] = AuxPixel[t];
                 }
             }
-        }
+        }*/
     /* // versione che salva tutta la mappa su un array temporaneo
         unsigned char *Temp = new unsigned char[bpr*imageH];
         for(int j =0; j < imageH; j++){
@@ -85,5 +85,5 @@ void Mirror::applyMirroring(BmpImage image){
         for(int i = 0; i<(imageH*bpr);i++){
             Map[i] = Temp[i];
         }*/
-    }
+    //}
 }

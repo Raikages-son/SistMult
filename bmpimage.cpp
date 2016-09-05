@@ -1,9 +1,5 @@
 #include "bmpimage.h"
 
-BmpImage::BmpImage(){
-
-}
-
 BmpImage::BmpImage(const char *Path){
     FILE *file;
     // apertura del file e controllo esistenza
@@ -16,8 +12,7 @@ BmpImage::BmpImage(const char *Path){
     fseek(file,0,0);
     fread(&type,sizeof(short),1, file);
     fread(&fileSize,sizeof(int),1, file);
-
-    fseek(file,10,0);
+    fread(&reserved,sizeof(int),1,file);
     fread(&offBytes,sizeof(int),1, file);
 
 
@@ -30,45 +25,56 @@ BmpImage::BmpImage(const char *Path){
     fread(&bpp,sizeof(short),1, file);
     fread(&compression,sizeof(int),1, file);
     fread(&imageSize,sizeof(int),1, file);
+    fread(&xResolution,sizeof(int),1, file);
+    fread(&yResolution,sizeof(int),1, file);
+    fread(&usedColors,sizeof(int),1, file);
+    fread(&importantColors,sizeof(int),1, file);
 
-    // input delle parti degli header
-    fseek(file,0,0);
+    // input dell' eventuale palette
 
-    fread(FILE_HEADER,sizeof(char),14,file);
+    PALETTE = new unsigned char[offBytes-headerSize];
 
-    fread(INFO_HEADER,sizeof(char),40,file);
-
-    PALETTE = new unsigned char[offBytes-54];
-
-    fread(PALETTE,sizeof(char),(offBytes-54),file);
+    fread(PALETTE,sizeof(char),(offBytes-headerSize),file);
 
     // input della mappa dei pixel
 
-    fseek(file,offBytes,0);
-    // do la dimensione alla mappa
-    Bitmap = new unsigned char[(width*bpp + getPadding())*height];
-
-    fread(Bitmap,sizeof(char), (width*bpp + getPadding())*height, file);
     fclose(file);
 }
 
 void BmpImage::save(const char *Path){
-    FILE *outFile = fopen(Path, "wb");
-    if(outFile == NULL) {
+    FILE *file = fopen(Path, "wb");
+    if(file == NULL) {
         cout << "Can't create file" << endl;
         exit(1);
     }
 
-    // stampo l'header
-    fwrite(FILE_HEADER, sizeof(char), 14 , outFile);
-    fwrite(INFO_HEADER, sizeof(char), 40, outFile);
-    fwrite(PALETTE, sizeof(char), offBytes-54,outFile);
+    // output dei dati del fileheader
+    fseek(file,0,0);
+    fwrite(&type,sizeof(short),1, file);
+    fwrite(&fileSize,sizeof(int),1, file);
+    fwrite(&reserved,sizeof(int),1,file);
+    fwrite(&offBytes,sizeof(int),1, file);
 
 
-    // stampo la mappa
+    // output dei dati dell'infoheader
 
-    fwrite(Bitmap,sizeof(char), (width*bpp + getPadding())*height, outFile);
-    fclose(outFile);
+    fwrite(&infoSize,sizeof(int),1,file);
+    fwrite(&width,sizeof(int),1, file);
+    fwrite(&height,sizeof(int),1, file);
+    fwrite(&planes,sizeof(short),1, file);
+    fwrite(&bpp,sizeof(short),1, file);
+    fwrite(&compression,sizeof(int),1, file);
+    fwrite(&imageSize,sizeof(int),1, file);
+    fwrite(&xResolution,sizeof(int),1, file);
+    fwrite(&yResolution,sizeof(int),1, file);
+    fwrite(&usedColors,sizeof(int),1, file);
+    fwrite(&importantColors,sizeof(int),1, file);
+
+    // output della palette
+
+    fwrite(PALETTE, sizeof(char), offBytes-headerSize,file);
+
+    fclose(file);
 
 }
 
@@ -88,12 +94,6 @@ void BmpImage::resize(unsigned int newWidth, unsigned int newHeight){
     int bpr = width*bpp+getPadding();
     fileSize = offBytes + height*bpr;
     imageSize = height * bpr;
-
-    resetHeaders();
-}
-
-void BmpImage::resetHeaders(){
-    // TODO: riscrivere gli headers secondo le nuove dimensioni
 
 }
 

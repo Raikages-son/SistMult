@@ -6,40 +6,34 @@
 using namespace::std;
 
 class BmpImage{
-private:
-    //FILEHEADER
-    unsigned char FILE_HEADER[14];
+protected:
+    const int headerSize=54;
+
     // DATI DEL FILE HEADER
-    unsigned short type = 16973;
+    unsigned short type;
     unsigned int fileSize;
-    unsigned int reserved = 0;
-    unsigned int offBytes = 1078;
+    unsigned int reserved;
+    unsigned int offBytes;
 
 
-    // INFOHEADER
-    unsigned char INFO_HEADER[40];
     // DATI DEL INFO HEADER
-    unsigned int infoSize = 40;
+    unsigned int infoSize;
     unsigned int width;
     unsigned int height;
-    unsigned short planes = 1;
+    unsigned short planes;
     unsigned short bpp;
-    unsigned int compression = 0;
+    unsigned int compression;
     unsigned int imageSize;
-    unsigned int xResolution = 0;
-    unsigned int yResolution = 0;
-    unsigned int usedColor = 0;
-    unsigned int importantColor = 0;
+    unsigned int xResolution;
+    unsigned int yResolution;
+    unsigned int usedColors;
+    unsigned int importantColors;
 
     // PALETTE
     unsigned char* PALETTE;
 
-    // MAPPA DEI PIXEL
-    unsigned char *Bitmap;
 
 public:
-    BmpImage();
-
     BmpImage(const char* Path);
 
     void save(const char* Path);
@@ -51,11 +45,10 @@ public:
 
     int getPadding();
 
-    unsigned char *getMap(){return Bitmap;}
+    unsigned char *getMap();
 
     void resize(unsigned int newWidth, unsigned int newHeight);
 
-    void resetHeaders();
 };
 
 #endif // BMPIMAGE_H
