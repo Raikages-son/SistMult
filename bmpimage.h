@@ -52,6 +52,10 @@ public:
     int getPadding();
 
     unsigned char *getMap(){return Bitmap;}
+
+    void resize(unsigned int newWidth, unsigned int newHeight);
+
+    void resetHeaders();
 };
 
 #endif // BMPIMAGE_H

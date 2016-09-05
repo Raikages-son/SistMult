@@ -82,3 +82,20 @@ int BmpImage::getPadding(){
     return extraBytes;
 }
 
+void BmpImage::resize(unsigned int newWidth, unsigned int newHeight){
+    width = newWidth;
+    height = newHeight;
+    int bpr = width*bpp+getPadding();
+    fileSize = offBytes + height*bpr;
+    imageSize = height * bpr;
+
+    resetHeaders();
+}
+
+void BmpImage::resetHeaders(){
+    // TODO: riscrivere gli headers secondo le nuove dimensioni
+
+}
+
+
+

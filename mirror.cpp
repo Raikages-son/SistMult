@@ -47,12 +47,20 @@ void Mirror::applyMirroring(BmpImage image){
     else if (bpp == 24){
         // array che rappresenta un pixel ausiliario
         unsigned char *AuxPixel= new unsigned char[3];
+        // calcolo la metà per difetto
+        int half;
+        if((bpr-paddingBytes)%2 == 0){
+            half = (bpr - paddingBytes)/2;
+        }
+        else{
+            half = (bpr - paddingBytes -1)/2;
+        }
 
         // scorro le righe della mappa
         for(int j = 0; j<imageH; j++){
             int lastPixel = (j+1)*bpr - paddingBytes - 3;
             // scorro i pixel della riga fino a metà
-            for(int i = 0; i<=(bpr - paddingBytes)/2; i+=3){
+            for(int i = 0; i<=half; i+=3){
                 // per le 3 componenti BGR (sono al contrario)
                 for(int t = 0; t<3; t++){
                     // salvo il pixel nell'array ausiliario

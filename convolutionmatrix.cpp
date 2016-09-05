@@ -45,7 +45,7 @@ void ConvolutionMatrix::apply3x3Mask(BmpImage image, const int *Matrix){
 
                 for(int t = 0; t < 9; t++){
                     if(Indexes[t]<0 || Indexes[t]>=imageH*bpr){
-                        Aux[t] = 0;
+                        Aux[t] = Map[Indexes[4]]*Matrix[t];
                     }
                     else{
                         int val = Map[Indexes[t]];
