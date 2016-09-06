@@ -13,6 +13,8 @@ public:
 
     unsigned char *** getMap(){return PixelMap;}
 
+    void editPMap(unsigned char*** map){PixelMap=map;}
+
 };
 
 #endif // BMP24BPP_H
