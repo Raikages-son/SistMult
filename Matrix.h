@@ -9,13 +9,13 @@
 class Matrix {
 public:
     Matrix();
-    static int** getEdgeDetection1();
-    static int** getEdgeDetection2();
-    static int** getEdgeDetection3();
-    static int** getBlur1();
-    static int** getBlur2();
-    static int** getSharp1();
-    static int** getSharp2();
+    static int** getEdgeDetection1(int range);
+    static int** getEdgeDetection2(int range);
+    static int** getEdgeDetection3(int range);
+    static int** getBlur1(int range);
+    static int** getBlur2(int range);
+    static int** getSharp1(int range);
+    static int** getSharp2(int range);
 
 };
 
