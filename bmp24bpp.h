@@ -1,7 +1,7 @@
 #ifndef BMP24BPP_H
 #define BMP24BPP_H
 
-#include <bmpimage.h>
+#include "bmpimage.h"
 
 class Bmp24bpp : public BmpImage{
 private:

@@ -1,48 +1,73 @@
 #include <iostream>
-#include <bmp24bpp.h>
-#include <mirror.h>
-#include <convolutionmatrix.h>
+#include "bmp24bpp.h"
+#include "mirror.h"
+#include "convolutionmatrix.h"
+#include "Matrix.h"
 
 using namespace std;
 
 int main(int argc, char *argv[]){
+    if(argc<4){
+        cout<< "not enougth arguments, at list 4 needed"<<endl;
+        exit(0);
+    }
+    string command=argv[2];
+    cout <<command;
+    Bmp24bpp img=Bmp24bpp(argv[1]);
+    if(command=="blur"||command=="sharpen"||command=="edge"){
+        if(argc<6){
+            cout<< "not enougth arguments for command:"+command+", 5 needed"<<endl;
+            exit(0);
+        }
+        string streght=argv[3];
+        int range=0;
+        try {
+            range=stoi(argv[4]);
+            if(range!=1){
+                throw std::invalid_argument("must be 1");
+            }
+        }
+        catch( invalid_argument e){
+            cout<< "invalid range :"<<argv[4]<<e.what()<<endl;
+            exit(0);
+        }
+        if(command=="blur"){
+            if(streght=="1") {
+                ConvolutionMatrix::applyMask(img, Matrix::getBlur1(range), range);
+            }else{
+                ConvolutionMatrix::applyMask(img, Matrix::getBlur2(range), range);
+            }
+        }else{
+            if(command=="sharpen"){
+                if(streght=="1") {
+                    ConvolutionMatrix::applyMask(img, Matrix::getSharp1(range), range);
+                }else{
+                    ConvolutionMatrix::applyMask(img, Matrix::getSharp2(range), range);
+                }
+            }else{
+                if(command=="edge") {
+                    if(streght=="1") {
+                        ConvolutionMatrix::applyMask(img, Matrix::getEdgeDetection1(range), range);
+                    }else{
+                        if(streght=="2") {
+                            ConvolutionMatrix::applyMask(img, Matrix::getEdgeDetection2(range), range);
+                        }else{
+                            ConvolutionMatrix::applyMask(img, Matrix::getEdgeDetection3(range), range);
+                        }
+                    }
+                }
 
-    Bmp24bpp bmp("D:\\DatiPaolo\\Desktop\\4k.bmp");
-  //  Mirror::applyMirroring(bmp);
-
-    // filtri di delineamento bordi
-   // int M[3][3] ={ {-1,0,1},{0,0,0},{1,0,-1}};
-   // int M[9] = {0,-1,0,-1,4,-1,0,-1,0};
-   // int M[9] = {-1,-1,-1,-1, 8,-1,-1,-1,-1};
-
-    // filtri di sharp
- //   int M[9] = {0,-1,0,-1,5,-1,0,-1,0};
-  //  int M[3][3] = {{-1,-1,-1},{-1,9,-1},{-1,-1,-1}};
-
-    int mSize = 7;
-    bool sharpen = false;
-
-    int **M = new int*[mSize];
-    for(int j =0; j<mSize; j++){
-        M[j] = new int[mSize];
-        for(int i =0; i<mSize; i++){
-            if(sharpen)
-                M[j][i] = -1;
-            else
-                M[j][i] = 1;
+            }
+        }
+        img.save(argv[5]);
+        exit(0);
+    }else {
+        if(command=="mirror"){
+            Mirror::applyMirroring(img);
+            img.save(argv[3]);
+        }else{
+            cout <<"unknown command: "<<command <<endl;
         }
     }
-    if(sharpen){
-        M[(mSize-1)/2][(mSize-1)/2]=mSize*mSize+1;
-    }
-
-    // filtri di bleur
- // int M[3][3] ={ {1,1,1},{1,1,1},{1,1,1}};
-  //  int M[9] = {1,2,1,2,4,2,1,2,1};
-
-    ConvolutionMatrix::applyMask(bmp,M,(mSize-1)/2);
-
-    bmp.save("D:\\DatiPaolo\\Documents\\progetti\\SistMult\\output.bmp");
-
-    return 0;
 }
+
