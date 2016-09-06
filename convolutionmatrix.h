@@ -2,11 +2,12 @@
 #define CONVOLUTIONMATRIX_H
 
 #include "bmpimage.h"
+#include "bmp24bpp.h"
 
 class ConvolutionMatrix{
 public:
     ConvolutionMatrix();
-    static void apply3x3Mask(BmpImage image,const int *Matrix);
+    static void applyMask(Bmp24bpp image,int** Matrix,int range);
 
 };
 

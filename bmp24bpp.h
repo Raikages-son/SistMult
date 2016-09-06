@@ -5,12 +5,13 @@
 
 class Bmp24bpp : public BmpImage{
 private:
-    unsigned char* M;
     unsigned char*** PixelMap;
 public:
     Bmp24bpp(const char *Path);
 
     void save(const char *Path);
+
+    unsigned char *** getMap(){return PixelMap;}
 
 };
 

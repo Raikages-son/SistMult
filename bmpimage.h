@@ -45,8 +45,6 @@ public:
 
     int getPadding();
 
-    unsigned char *getMap();
-
     void resize(unsigned int newWidth, unsigned int newHeight);
 
 };

@@ -54,3 +54,4 @@ void Bmp24bpp::save(const char *Path){
 }
 
 
+
