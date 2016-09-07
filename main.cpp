@@ -3,6 +3,7 @@
 #include "mirror.h"
 #include "convolutionmatrix.h"
 #include "Matrix.h"
+#include "imageresizer.h"
 
 using namespace std;
 
@@ -13,7 +14,8 @@ int main(int argc, char *argv[]){
     }
     string command=argv[2];
     cout <<command;
-    Bmp24bpp img=Bmp24bpp(argv[1]);
+    Bmp24bpp bmp = Bmp24bpp(argv[1]);
+    Bmp24bpp *img=  &bmp;
     if(command=="blur"||command=="sharpen"||command=="edge"){
         if(argc<6){
             cout<< "not enougth arguments for command:"+command+", 5 needed"<<endl;
@@ -59,12 +61,12 @@ int main(int argc, char *argv[]){
 
             }
         }
-        img.save(argv[5]);
+        img->save(argv[5]);
         exit(0);
     }else {
         if(command=="mirror"){
-            Mirror::applyMirroring(img);
-            img.save(argv[3]);
+            Mirror::horizontalMirroring(bmp);
+            img->save(argv[3]);
         }else{
             cout <<"unknown command: "<<command <<endl;
         }

@@ -4,15 +4,15 @@ ConvolutionMatrix::ConvolutionMatrix(){
 
 }
 
-void ConvolutionMatrix::applyMask(Bmp24bpp image,int** Matrix, int range){
+void ConvolutionMatrix::applyMask(Bmp24bpp *image,int** Matrix, int range){
     // prendo l'altezza della mappa in pixel
-    int imageH = image.getHeight();
+    int imageH = image->getHeight();
     // prendo la larghezza della mappa in pixel
-    int imageW = image.getWidth();
+    int imageW = image->getWidth();
     // prendo il numero di byte di padding per riga
-    int paddingBytes = image.getPadding();
+    int paddingBytes = image->getPadding();
     // metto un puntatore all'inizio della mappa di byte dell'immagine
-    unsigned char*** Map = image.getMap();
+    unsigned char*** Map = image->getMap();
     // dimenzione della matrice di convoluzione
     int mSize = range*2 +1;
     // somma dei coefficenti della matrice di convoluzione
@@ -54,10 +54,6 @@ void ConvolutionMatrix::applyMask(Bmp24bpp image,int** Matrix, int range){
         }
     }
 
-    for(int j=0; j<imageH;j++)
-        for(int i=0; i< imageW ;i++)
-            for(int p=0; p<3; p++)
-                Map[j][i][p] = Temp[j][i][p];
-
+    image->editPMap(Temp);
 
 }

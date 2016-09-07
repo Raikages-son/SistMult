@@ -15,6 +15,8 @@ public:
 
     void editPMap(unsigned char*** map){PixelMap=map;}
 
+   // void resize(unsigned int newWidth, unsigned int newHeight);
+
 };
 
 #endif // BMP24BPP_H

@@ -29,6 +29,23 @@ BmpImage::BmpImage(const char *Path){
     fread(&yResolution,sizeof(int),1, file);
     fread(&usedColors,sizeof(int),1, file);
     fread(&importantColors,sizeof(int),1, file);
+/*
+    cout << "Tipo: " << type << endl;
+    cout << "Dimensione file: " << fileSize << endl;
+    cout << "Riservato: " << reserved << endl;
+    cout << "Offset immagine: " << offBytes << endl;
+
+    cout << "Dimensione info: : " << infoSize << endl;
+    cout << "Larghezza px: " << width << endl;
+    cout << "Altezza px: " << height << endl;
+    cout << "Piani: " << planes << endl;
+    cout << "BPP: " << bpp << endl;
+    cout << "Compressione: " << compression << endl;
+    cout << "Dimensione immagine: " << imageSize << endl;
+    cout << "Risoluzione x: " << xResolution << endl;
+    cout << "Risoluzione y: " << yResolution << endl;
+    cout << "Colori utilizzati: " << usedColors << endl;
+    cout << "Colori principali: " << importantColors << endl;*/
 
     // input dell' eventuale palette
 
@@ -47,6 +64,7 @@ void BmpImage::save(const char *Path){
         cout << "Can't create file" << endl;
         exit(1);
     }
+
 
     // output dei dati del fileheader
     fseek(file,0,0);
@@ -88,13 +106,13 @@ int BmpImage::getPadding(){
     return extraBytes;
 }
 
-void BmpImage::resize(unsigned int newWidth, unsigned int newHeight){
+void BmpImage::resize(const unsigned int& newWidth,const unsigned int& newHeight){
+
     width = newWidth;
     height = newHeight;
     int bpr = width*bpp+getPadding();
     fileSize = offBytes + height*bpr;
-    imageSize = height * bpr;
-
+    imageSize = fileSize - offBytes;
 }
 
 

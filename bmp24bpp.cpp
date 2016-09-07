@@ -52,6 +52,28 @@ void Bmp24bpp::save(const char *Path){
     }
     fclose(file);
 }
+/*
+void Bmp24bpp::resize(unsigned int newWidth, unsigned int newHeight){
+
+    for(int j =0; j<height; j++){
+        for(int i =0; i<width; i++){
+            delete[] PixelMap[j][i];
+        }
+        delete[]PixelMap[j];
+    }
+    delete[] PixelMap;
+
+    BmpImage::resize(newWidth,newHeight);
+
+    PixelMap = new unsigned char **[height];
+    for(int j=0; j<height; j++){
+        PixelMap[j]=new unsigned char *[width];
+        for(int i=0; i< width; i++){
+            PixelMap[j][i] = new unsigned char[3];
+        }
+    }
+
+}*/
 
 
 
