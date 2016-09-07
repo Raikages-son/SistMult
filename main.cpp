@@ -5,11 +5,32 @@
 #include "convolutionmatrix.h"
 #include "Matrix.h"
 #include "imageresizer.h"
+#include "simplefilters.h"
+#include <stdexcept>
+#include <cstdlib>
 
 using namespace std;
 
 int main(int argc, char *argv[]){
-    Bmp8bpp b = Bmp8bpp("D:\\DatiPaolo\\Documents\\progetti\\SistMult\\dist512.bmp");
+    Bmp8bpp a=Bmp8bpp("C:\\Users\\Diego\\Desktop\\a.bmp");
+    Bmp24bpp b=Bmp24bpp("C:\\Users\\Diego\\Desktop\\b.bmp");
+    Bmp8bpp* aa=&a;
+    Bmp24bpp* bb=&b;
+
+    //simpleFilters::changeLight(aa,2);
+    //simpleFilters::changeLight(bb,2);
+
+    //simpleFilters::changeContrast(bb);
+    //simpleFilters::changeContrast(aa);
+
+    //simpleFilters::changeGamma(bb, 2);
+    //simpleFilters::changeGamma(aa, 2);
+
+    aa->save("C:\\Users\\Diego\\Desktop\\aa.bmp");
+    bb->save("C:\\Users\\Diego\\Desktop\\bb.bmp");
+    return 0;
+
+    /*Bmp8bpp b = Bmp8bpp("D:\\DatiPaolo\\Documents\\progetti\\SistMult\\dist512.bmp");
     Bmp8bpp *bmpp = &b;
 
     int mSize = 3;
@@ -89,11 +110,11 @@ int main(int argc, char *argv[]){
         exit(0);
     }else {
         if(command=="mirror"){
-            Mirror::horizontalMirroring(bmp);
+            Mirror::horizontalMirroring(&bmp);
             img->save(argv[3]);
         }else{
             cout <<"unknown command: "<<command <<endl;
         }
-    }
+    }*/
 }
 

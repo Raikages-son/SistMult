@@ -3,3 +3,4 @@ SistMult.pro.user
 .idea
 CMakeLists.txt
 *.autosave
+*.pri
