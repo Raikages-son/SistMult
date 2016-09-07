@@ -2,6 +2,7 @@
 #define BMP24BPP_H
 
 #include "bmpimage.h"
+#include "bmp8bpp.h"
 
 class Bmp24bpp : public BmpImage{
 private:
@@ -14,8 +15,6 @@ public:
     unsigned char *** getMap(){return PixelMap;}
 
     void editPMap(unsigned char*** map){PixelMap=map;}
-
-   // void resize(unsigned int newWidth, unsigned int newHeight);
 
 };
 

@@ -1,8 +1,6 @@
-#include "bmp24bpp.h"
+#include "bmp8bpp.h"
 
-Bmp24bpp::Bmp24bpp(const char *Path): BmpImage(Path){
-
-    PixelMap = new unsigned char**[height];
+Bmp8bpp::Bmp8bpp(const char *Path): BmpImage(Path){
 
     FILE *file;
     // apertura del file e controllo esistenza
@@ -14,24 +12,19 @@ Bmp24bpp::Bmp24bpp(const char *Path): BmpImage(Path){
 
     char paddingByte;
 
+    PixelMap = new unsigned char*[height];
     for(int j=0; j<height; j++){
-        PixelMap[j] = new unsigned char *[width];
+        PixelMap[j] = new unsigned char[width];
         for(int i=0; i<width; i++){
-            PixelMap[j][i]= new unsigned char[3];
-            for(int p=0; p<3; p++){
-                fread(&PixelMap[j][i][p],sizeof(char),1,file);
-            }
+            fread(&PixelMap[j][i],sizeof(char),1,file);
         }
         fread(&paddingByte,sizeof(char),getPadding(),file);
        // fseek(file,getPadding(),SEEK_CUR);
     }
     fclose(file);
-    //    M = new unsigned char[width*height*3];
-     //   fread(M,sizeof(char),width*height*3,file);
-
 }
 
-void Bmp24bpp::save(const char *Path){
+void Bmp8bpp::save(const char *Path){
     BmpImage::save(Path);
     FILE *file = fopen(Path, "ab");
     if(file == NULL) {
@@ -44,14 +37,9 @@ void Bmp24bpp::save(const char *Path){
 
     for(int j=0; j<height; j++){
         for(int i=0; i<width; i++){
-            for(int p=0; p<3; p++){
-                fwrite(&PixelMap[j][i][p],sizeof(char),1,file);
-            }
+            fwrite(&PixelMap[j][i],sizeof(char),1,file);
         }
         fwrite(&paddingByte,sizeof(char),getPadding(),file);
     }
     fclose(file);
 }
-
-
-

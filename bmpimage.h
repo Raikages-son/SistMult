@@ -45,6 +45,8 @@ public:
 
     int getPadding();
 
+    void printInfo();
+
     void resize(const unsigned int& newWidth,const unsigned int& newHeight);
 
 };

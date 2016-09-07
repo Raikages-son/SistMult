@@ -1,5 +1,6 @@
 #include <iostream>
 #include "bmp24bpp.h"
+#include "bmp8bpp.h"
 #include "mirror.h"
 #include "convolutionmatrix.h"
 #include "Matrix.h"
@@ -8,6 +9,29 @@
 using namespace std;
 
 int main(int argc, char *argv[]){
+    Bmp8bpp b = Bmp8bpp("D:\\DatiPaolo\\Documents\\progetti\\SistMult\\dist512.bmp");
+    Bmp8bpp *bmpp = &b;
+
+    int mSize = 3;
+    bool sharpen = true;
+
+    int **M = new int*[mSize];
+    for(int j =0; j<mSize; j++){
+        M[j] = new int[mSize];
+        for(int i =0; i<mSize; i++){
+            if(sharpen)
+                M[j][i] = -1;
+            else
+                M[j][i] = 1;
+        }
+    }
+    if(sharpen){
+        M[(mSize-1)/2][(mSize-1)/2]=mSize*mSize+1;
+    }
+
+    //ConvolutionMatrix::applyMask(bmpp,M,(mSize-1)/2);
+    ImageResizer::resize(bmpp,-292,1077);
+    bmpp->save("D:\\DatiPaolo\\Documents\\progetti\\SistMult\\output.bmp");
     if(argc<4){
         cout<< "not enougth arguments, at list 4 needed"<<endl;
         exit(0);

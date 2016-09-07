@@ -29,23 +29,6 @@ BmpImage::BmpImage(const char *Path){
     fread(&yResolution,sizeof(int),1, file);
     fread(&usedColors,sizeof(int),1, file);
     fread(&importantColors,sizeof(int),1, file);
-/*
-    cout << "Tipo: " << type << endl;
-    cout << "Dimensione file: " << fileSize << endl;
-    cout << "Riservato: " << reserved << endl;
-    cout << "Offset immagine: " << offBytes << endl;
-
-    cout << "Dimensione info: : " << infoSize << endl;
-    cout << "Larghezza px: " << width << endl;
-    cout << "Altezza px: " << height << endl;
-    cout << "Piani: " << planes << endl;
-    cout << "BPP: " << bpp << endl;
-    cout << "Compressione: " << compression << endl;
-    cout << "Dimensione immagine: " << imageSize << endl;
-    cout << "Risoluzione x: " << xResolution << endl;
-    cout << "Risoluzione y: " << yResolution << endl;
-    cout << "Colori utilizzati: " << usedColors << endl;
-    cout << "Colori principali: " << importantColors << endl;*/
 
     // input dell' eventuale palette
 
@@ -106,8 +89,28 @@ int BmpImage::getPadding(){
     return extraBytes;
 }
 
-void BmpImage::resize(const unsigned int& newWidth,const unsigned int& newHeight){
+void BmpImage::printInfo(){
+    cout << "  ########  FILE HEADER  ########" << endl<<endl;
+    cout << "Tipo:                        " << type << endl;
+    cout << "Dimensione file:             " << fileSize << endl;
+    cout << "Riservato:                   " << reserved << endl;
+    cout << "Offset immagine:             " << offBytes << endl<<endl;
 
+    cout << "  ########  INFO HEADER  ########" << endl<<endl;
+    cout << "Dimensione info: :           " << infoSize << endl;
+    cout << "Larghezza px:                " << width << endl;
+    cout << "Altezza px:                  " << height << endl;
+    cout << "Piani:                       " << planes << endl;
+    cout << "BPP:                         " << bpp << endl;
+    cout << "Compressione:                " << compression << endl;
+    cout << "Dimensione immagine:         " << imageSize << endl;
+    cout << "Risoluzione x:               " << xResolution << endl;
+    cout << "Risoluzione y:               " << yResolution << endl;
+    cout << "Colori utilizzati:           " << usedColors << endl;
+    cout << "Colori principali:           " << importantColors << endl<<endl;
+}
+
+void BmpImage::resize(const unsigned int& newWidth,const unsigned int& newHeight){
     width = newWidth;
     height = newHeight;
     int bpr = width*bpp+getPadding();
