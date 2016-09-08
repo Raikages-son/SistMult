@@ -102,7 +102,17 @@ int main(int argc, char *argv[]){
                     simpleFilters::changeGamma(img,scale);
 
                 }else{
-                    cout << "unknown 4 arguments command: " << command << endl;
+                    if(command=="contrast"){
+                        int scale=0;
+                        try {
+                            scale= stoi(argv[3]);
+                        }catch (invalid_argument e){
+                            cout << "invalid arguments for scale"<<endl;
+                        }
+                        simpleFilters::changeContrast(img,scale);
+                    }else {
+                        cout << "unknown 4 arguments command: " << command << endl;
+                    }
                 }
             }
             img->save(argv[4]);
@@ -111,12 +121,8 @@ int main(int argc, char *argv[]){
         case 4:{
             if(command=="mirror"){
                 Mirror::horizontalMirroring(img);
-            }else{
-                if(command=="contrast"){
-                    simpleFilters::changeContrast(img);
-                }else {
+            }else {
                     cout << "unknown 3 arguments command: " << command << endl;
-                }
             }
             break;
             img->save(argv[3]);
