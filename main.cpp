@@ -12,47 +12,6 @@
 using namespace std;
 
 int main(int argc, char *argv[]){
-    Bmp8bpp a=Bmp8bpp("C:\\Users\\Diego\\Desktop\\a.bmp");
-    Bmp24bpp b=Bmp24bpp("C:\\Users\\Diego\\Desktop\\b.bmp");
-    Bmp8bpp* aa=&a;
-    Bmp24bpp* bb=&b;
-
-    //simpleFilters::changeLight(aa,2);
-    //simpleFilters::changeLight(bb,2);
-
-    //simpleFilters::changeContrast(bb);
-    //simpleFilters::changeContrast(aa);
-
-    //simpleFilters::changeGamma(bb, 2);
-    //simpleFilters::changeGamma(aa, 2);
-
-    aa->save("C:\\Users\\Diego\\Desktop\\aa.bmp");
-    bb->save("C:\\Users\\Diego\\Desktop\\bb.bmp");
-    return 0;
-
-    /*Bmp8bpp b = Bmp8bpp("D:\\DatiPaolo\\Documents\\progetti\\SistMult\\dist512.bmp");
-    Bmp8bpp *bmpp = &b;
-
-    int mSize = 3;
-    bool sharpen = true;
-
-    int **M = new int*[mSize];
-    for(int j =0; j<mSize; j++){
-        M[j] = new int[mSize];
-        for(int i =0; i<mSize; i++){
-            if(sharpen)
-                M[j][i] = -1;
-            else
-                M[j][i] = 1;
-        }
-    }
-    if(sharpen){
-        M[(mSize-1)/2][(mSize-1)/2]=mSize*mSize+1;
-    }
-
-    //ConvolutionMatrix::applyMask(bmpp,M,(mSize-1)/2);
-    ImageResizer::resize(bmpp,-292,1077);
-    bmpp->save("D:\\DatiPaolo\\Documents\\progetti\\SistMult\\output.bmp");
     if(argc<4){
         cout<< "not enougth arguments, at list 4 needed"<<endl;
         exit(0);
@@ -70,8 +29,11 @@ int main(int argc, char *argv[]){
         int range=0;
         try {
             range=stoi(argv[4]);
-            if(range!=1){
-                throw std::invalid_argument("must be 1");
+            if(range<1){
+                throw std::invalid_argument("must be bigger than 0");
+            }
+            if(range>10){
+                cout<<"with a range bigger than 10, operation become really slow"<<endl;
             }
         }
         catch( invalid_argument e){
@@ -115,6 +77,6 @@ int main(int argc, char *argv[]){
         }else{
             cout <<"unknown command: "<<command <<endl;
         }
-    }*/
+    }
 }
 
