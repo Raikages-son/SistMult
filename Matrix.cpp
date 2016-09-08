@@ -6,170 +6,201 @@
 
 Matrix::Matrix() {}
 
+/*  Edge detection 1. Esempio matrice di raggio 2
+ *
+ * -1  0  0  0  1
+ *  0 -1  0  1  0
+ *  0  0  0  0  0
+ *  0  1  0 -1  0
+ *  1  0  0  0 -1
+*/
 int** Matrix::getEdgeDetection1(int range) {
+    // calcolo la dimensione
     int size=range*2+1;
+    // inizializzazione matrice
     int** matrix=new int*[size];
+    // scorro le righe
     for(int j=0; j<size;j++){
+        // inizializzo le righe
         matrix[j]=new int[size];
-        for(int h=0; h<size; h++){
-            if((j<size/2 && h<size/2)||(j>size/2 && h>size/2)) {
-                matrix[j][h] = -1;
-            }else{if((j>size/2 && h<size/2)||(j>size/2 && h>size/2)) {
-                    matrix[j][h] = 1;
-                }else{
-                    matrix[j][h] = 0;
-                }
-            }
+        // scorro le colonne
+        for(int i=0; i<size; i++){
+            // inizializzo l'intera riga a 0
+            matrix[j][i] = 0;
         }
+        // imposto a -1 l'elemento sulla diagonale
+        matrix[j][j] = -1;
+        // imposto a 1 l'elemento simmetricamente opposto
+        matrix[j][range*2 -j]= 1;
     }
-    return matrix;
-    }
-
-int** Matrix::getEdgeDetection2(int range) {
-    int size=range*2+1;
-    int** matrix=new int*[size];
-    for(int j=0; j<size;j++){
-        matrix[j]=new int[size];
-        for(int h=0; h<size; h++){
-            if((j==size/2 || h==size/2)) {
-                if(j!=h) {
-                    matrix[j][h] = -1;
-                }else {
-                    matrix[j][h] = 4;
-                }
-            }else{
-                matrix[j][h] = 0;
-            }
-        }
-    }
+    // imposto il centro della matrice a 0
+    matrix[range][range] = 0;
+    // ritorno la matrice
     return matrix;
 }
-    /*int** matrix=new int*[3];
-    matrix[0] = new int[3]{0,-1,0};
-    matrix[1] = new int[3]{-1,4,-1};
-    matrix[2] = new int[3]{0,-1,0};
 
-
-    matrix[0] = new int[5]{ 0, 0,-1, 0, 0};
-    matrix[2] = new int[5]{ 0, 0,-1, 0, 0};
-    matrix[1] = new int[5]{-1,-1, 4,-1,-1};
-    matrix[0] = new int[5]{ 0, 0,-1, 0, 0};
-    matrix[2] = new int[5]{ 0, 0,-1, 0, 0};
-
+/*  Edge detection 2. Esempio matrice di raggio 2
+ *
+ *  0  0 -1  0  0
+ *  0  0 -1  0  0
+ * -1 -1  8 -1 -1
+ *  0  0 -1  0  0
+ *  0  0 -1  0  0
+*/
+int** Matrix::getEdgeDetection2(int range) {
+    // calcolo la dimensione
+    int size=range*2+1;
+    // inizializzazione matrice
+    int** matrix=new int*[size];
+    // scorro le righe
+    for(int j=0; j<size;j++){
+        // inizializzo le righe
+        matrix[j]=new int[size];
+        // se la riga corrente non è la riga di mezzo
+        if(j!=range){
+            // imposto l'intera riga a 0
+            for(int i=0; i<size;i++){
+                matrix[j][i] = 0;
+            }
+            // imposto a -1 l'elemento centrale
+            matrix[j][range]= -1;
+        }
+        // se la riga corrente è la riga di mezzo
+        else{
+            // imposto l'intera riga a -1
+            for(int i=0; i<size;i++){
+                matrix[j][i] = -1;
+            }
+            // imposto l'elemento centrale opposto alla somma degli elementi negativi
+            matrix[j][range] = 4*range;
+        }
+    }
+    // ritorno la matrice
     return matrix;
-}*/
+}
+
+
+/*  Edge detection 3. Esempio matrice di raggio 2
+ *
+ *  -1 -1 -1 -1 -1
+ *  -1 -1 -1 -1 -1
+ *  -1 -1 26 -1 -1
+ *  -1 -1 -1 -1 -1
+ *  -1 -1 -1 -1 -1
+*/
 
 int** Matrix::getEdgeDetection3(int range) {
-        int size=range*2+1;
-        int** matrix=new int*[size];
-        for(int j=0; j<size;j++){
-            matrix[j]=new int[size];
-            for(int h=0; h<size; h++){
-                if(j==size/2 && h==size/2) {
-                    matrix[j][h] = 8;
-                }else {
-                    matrix[j][h] = -1;
-                }
-            }
+    // calcolo la dimensione
+    int size=range*2+1;
+    // inizializzazione matrice
+    int** matrix=new int*[size];
+    // scorro le righe
+    for(int j=0; j<size;j++){
+        // inizializzo le righe
+        matrix[j]=new int[size];
+        // imposto l'intera riga a -1
+        for(int i=0; i<size;i++){
+            matrix[j][i] = -1;
         }
-        return matrix;
     }
-/*{
-    int** matrix=new int*[3];
-    matrix[0] = new int[3]{-1,-1,-1};
-    matrix[1] = new int[3]{-1, 8,-1};
-    matrix[2] = new int[3]{-1,-1,-1};
+    // imposto l'elemento centrale opposto alla somma degli elementi negativi più uno
+    matrix[range][range]=size*size-1;
+    // ritorno la matrice
     return matrix;
-}*/
+}
+
+
+/*  Edge Blur 1. Esempio matrice di raggio 2
+ *
+ *  1  1  1  1  1
+ *  1  1  1  1  1
+ *  1  1  1  1  1
+ *  1  1  1  1  1
+ *  1  1  1  1  1
+*/
 int** Matrix::getBlur1(int range) {
+    // calcolo la dimensione
     int size=range*2+1;
+    // inizializzazione matrice
     int** matrix=new int*[size];
+    // scorro le righe
     for(int j=0; j<size;j++){
+        // inizializzo le righe
         matrix[j]=new int[size];
-        for(int h=0; h<size; h++){
-            matrix[j][h] = 1;
+        // imposto l'intera riga a 1
+        for(int i=0; i<size;i++){
+            matrix[j][i] = 1;
         }
     }
+    // ritorno la matrice
     return matrix;
 }
-/*
-    int** matrix=new int*[3];
-    matrix[0] = new int[3]{1,1,1};
-    matrix[1] = new int[3]{1,1,1};
-    matrix[2] = new int[3]{1,1,1};
-    return matrix;
-}*/
-int** Matrix::getBlur2(int range) {
-    int size=range*2+1;
-    int** matrix=new int*[size];
-    for(int j=0; j<size;j++){
-        matrix[j]=new int[size];
-        for(int h=0; h<size; h++){
-            if((j==size/2 || h==size/2)) {
-                if(j!=h) {
-                    matrix[j][h] = 2;
-                }else {
-                    matrix[j][h] = 4;
-                }
-            }else{
-                matrix[j][h] = 1;
-            }
-        }
-    }
-    return matrix;
-}
-/*
-    int** matrix=new int*[3];
-    matrix[0] = new int[3]{1,2,1};
-    matrix[1] = new int[3]{2,4,2};
-    matrix[2] = new int[3]{1,2,1};
-    return matrix;
-}*/
+
+
+/*  Sharp 1. Esempio matrice di raggio 1
+ *
+ *  0 -1  0
+ * -1  5 -1
+ *  0 -1  0
+*/
+
 int** Matrix::getSharp1(int range) {
+    // calcolo la dimensione
     int size=range*2+1;
+    // inizializzazione matrice
     int** matrix=new int*[size];
+    // scorro le righe
     for(int j=0; j<size;j++){
+        // inizializzo le righe
         matrix[j]=new int[size];
-        for(int h=0; h<size; h++){
-            if((j==size/2 || h==size/2)) {
-                if(j!=h) {
-                    matrix[j][h] = -1;
-                }else {
-                    matrix[j][h] = 5;
-                }
-            }else{
-                matrix[j][h] = 0;
+        // se la riga non è quella di mezzo
+        if(j != range){
+            // inizializzo tutti gli elementi a 0
+            for(int i=0; i<size;i++){
+                matrix[j][i] = 0;
+            }
+            // imposto a -1 l'elemento centrale
+            matrix[j][range] = -1;
+        }
+        // se la riga è quella centrale
+        else{
+            // inizializzo tutti gli elementi a -1
+            for(int i=0; i<size;i++){
+                matrix[j][i] = -1;
             }
         }
     }
+    // l'elemento centrale è opposto alla somma degli elementi e maggiorato di 1
+    matrix[range][range] = 4*range+1;
+    //ritorno la matrice
     return matrix;
 }
-/*
-    int** matrix=new int*[3];
-    matrix[0] = new int[3]{0,-1,0};
-    matrix[1] = new int[3]{-1,5,-1};
-    matrix[2] = new int[3]{0,-1,0};
-    return matrix;
-}*/
+
+
+/*  Edge detection 2. Esempio matrice di raggio 2
+ *
+ * -1 -1 -1
+ * -1  9 -1
+ * -1 -1 -1
+*/
+
 int** Matrix::getSharp2(int range) {
+    // calcolo la dimensione
     int size=range*2+1;
+    // inizializzazione matrice
     int** matrix=new int*[size];
+    // scorro le righe
     for(int j=0; j<size;j++){
+        // inizializzo le righe
         matrix[j]=new int[size];
-        for(int h=0; h<size; h++){
-            if(j==size/2 && h==size/2) {
-                matrix[j][h] = 9;
-            }else {
-                matrix[j][h] = -1;
-            }
+        // inizializzo tutti gli elementi a -1
+        for(int i=0; i<size;i++){
+            matrix[j][i] = -1;
         }
     }
+    // l'elemento centrale è opposto alla somma degli elementi e maggiorato di 1
+    matrix[range][range] = size*size;
+    // ritorno la matrice
     return matrix;
 }
-/*
-    int** matrix=new int*[3];
-    matrix[0] = new int[3]{-1,-1,-1};
-    matrix[1] = new int[3]{-1,9,-1};
-    matrix[2] = new int[3]{-1,-1,-1};
-    return matrix;
-}*/
+
