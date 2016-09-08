@@ -124,8 +124,8 @@ int main(int argc, char *argv[]){
             }else {
                     cout << "unknown 3 arguments command: " << command << endl;
             }
-            break;
             img->save(argv[3]);
+            break;
         }
         default:{
             cout <<"unknown command with: "<<argc<<" arguments"<<endl;
