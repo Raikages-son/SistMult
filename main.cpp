@@ -8,35 +8,46 @@
 #include "simplefilters.h"
 #include "bpmFactory.h"
 #include "Test.h"
+#include "Help.h"
 #include <stdexcept>
 #include <cstdlib>
 
 using namespace std;
 
 int main(int argc, char *argv[]){
-    if(argc<3){
-        cout<< "Not enough arguments, at least 4 are needed"<<endl;
+    if(argc<2){
+        cout<< "Not enough arguments, at least 1 is needed, launch with -help to have all the information about the possible commands and arguments"<<endl;
         exit(0);
     }
-    if(argc==3){
-        string command=argv[1];
-        if(command=="test") {
-            Test::test(argv[2]);
-        }
+    string command;
+    BmpImage *img;
+    if(argc>2){
+        command=argv[2];
+        img= bpmFactory::buildImg(argv[1]);
+    }else{
+        command=argv[1];
     }
-    string command=argv[2];
     cout <<command<<endl;
-    BmpImage *img= bpmFactory::buildImg(argv[1]);
     switch(argc) {
-        case 3:{
-            command=argv[1];
-            if(command=="test") {
-                Test::test(argv[2]);
+        case 2:{
+            if(command=="help"){
+                Help::help();
+            }else{
+                cout << "unknown 1 argument command: " << command << endl;
             }
+            break;
+        }
+        case 3:{
+            if(command=="test") {
+                Test::test(argv[1]);
+            }else{
+                cout << "unknown 2 arguments command: " << command << endl;
+            }
+            break;
         }
         case 6: {
             if (command == "blur" || command == "sharpen" || command == "edge") {
-                string streght = argv[3];
+                string strength = argv[3];
                 int range = 0;
                 try {
                     range = stoi(argv[4]);
@@ -51,24 +62,24 @@ int main(int argc, char *argv[]){
                     cout << "invalid range :" << argv[4] << e.what() << endl;
                 }
                 if (command == "blur") {
-                    if (streght == "1") {
+                    if (strength == "1") {
                         ConvolutionMatrix::applyMask(img, Matrix::getBlur1(range), range);
                     } else {
                         ConvolutionMatrix::applyMask(img, Matrix::getBlur2(range), range);
                     }
                 } else {
                     if (command == "sharpen") {
-                        if (streght == "1") {
+                        if (strength == "1") {
                             ConvolutionMatrix::applyMask(img, Matrix::getSharp1(range), range);
                         } else {
                             ConvolutionMatrix::applyMask(img, Matrix::getSharp2(range), range);
                         }
                     } else {
                         if (command == "edge") {
-                            if (streght == "1") {
+                            if (strength == "1") {
                                 ConvolutionMatrix::applyMask(img, Matrix::getEdgeDetection1(range), range);
                             } else {
-                                if (streght == "2") {
+                                if (strength == "2") {
                                     ConvolutionMatrix::applyMask(img, Matrix::getEdgeDetection2(range), range);
                                 } else {
                                     ConvolutionMatrix::applyMask(img, Matrix::getEdgeDetection3(range), range);
@@ -96,8 +107,8 @@ int main(int argc, char *argv[]){
             break;
         }
         case 5:{
+            int scale=0;
             if(command=="light"){
-                int scale=0;
                 try {
                     scale= stoi(argv[3]);
                 }catch (invalid_argument e){
@@ -106,7 +117,6 @@ int main(int argc, char *argv[]){
                 simpleFilters::changeLight(img,scale);
             }else{
                 if(command=="gamma"){
-                    int scale=0;
                     try {
                         scale= stoi(argv[3]);
                     }catch (invalid_argument e){
@@ -116,7 +126,6 @@ int main(int argc, char *argv[]){
 
                 }else{
                     if(command=="contrast"){
-                        int scale=0;
                         try {
                             scale= stoi(argv[3]);
                         }catch (invalid_argument e){
