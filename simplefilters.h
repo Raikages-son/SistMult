@@ -19,6 +19,8 @@ public:
 
     static void changeGamma(Bmp24bpp* image, float scale);
     static void changeGamma(Bmp8bpp* image, float scale);
+
+    static void desaturate(Bmp24bpp* image);
 };
 
 #endif // SIMPLEFILTERS_H

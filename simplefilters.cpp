@@ -54,16 +54,15 @@ void simpleFilters::changeLight(Bmp8bpp* image, int scale){
 }
 
 void simpleFilters::changeContrast(Bmp24bpp* image, int scale){
-    float factor=259*(scale+255)/255*(259-scale);
+
     int color;
     unsigned char*** Map = image->getMap();
 
     for(int j=0; j<image->getHeight(); j++)
         for(int i=0; i<image->getWidth(); i++)
             for(int b=0; b<3; b++){
-                color=factor*(Map[j][i][b]-128)+128;
-                        /*(Map[j][i][b]*255)/128;
-                color-=(255*scale/128);*/
+                color=(Map[j][i][b]*255)/128;
+                color-=(255*scale)/128;
                 if(color>255)
                     Map[j][i][b]=255;
                 else{
@@ -84,8 +83,8 @@ void simpleFilters::changeContrast(Bmp8bpp* image, int scale){
 
     for(int j=0; j<image->getHeight(); j++)
         for(int i=0; i<image->getWidth(); i++){
-            pixel=(Map[j][i]*255)/120;
-            pixel-=(255*scale/120);
+            pixel=(Map[j][i]*256)/128;
+            pixel-=(256*scale/128);
             if(pixel>255)
                 Map[j][i]=255;
             else{
@@ -99,15 +98,15 @@ void simpleFilters::changeContrast(Bmp8bpp* image, int scale){
 }
 
 void simpleFilters::changeGamma(Bmp24bpp* image, float scale){
-
-    int color;
+    float correction=1/scale;
+    float color;
     unsigned char*** Map = image->getMap();
 
     for(int j=0; j<image->getHeight(); j++)
         for(int i=0; i<image->getWidth() ;i++)
             for(int b=0; b<3; b++){
                 color=Map[j][i][b];
-                color=pow(color/255,scale)*255;
+                color=pow(color/255,correction)*255;
                 if(color>255)
                     Map[j][i][b]=255;
                 else{
@@ -121,14 +120,14 @@ void simpleFilters::changeGamma(Bmp24bpp* image, float scale){
 }
 
 void simpleFilters::changeGamma(Bmp8bpp* image, float scale){
-
-    int pixel;
+    float correction=1/scale;
+    float pixel;
     unsigned char** Map = image->getMap();
 
     for(int j=0; j<image->getHeight(); j++)
         for(int i=0; i<image->getWidth() ;i++){
             pixel=Map[j][i];
-            pixel=pow(pixel/255,scale)*255;
+            pixel=pow(pixel/255,correction)*255;
             if(pixel>255)
                 Map[j][i]=255;
             else{
@@ -137,6 +136,29 @@ void simpleFilters::changeGamma(Bmp8bpp* image, float scale){
                 else
                     Map[j][i]=pixel;
             }
+        }
+    image->editPMap(Map);
+}
+
+void simpleFilters::desaturate(Bmp24bpp *image)
+{
+    unsigned char*** Map = image->getMap();
+    int gray, min, max;
+
+    for(int j=0; j<image->getHeight(); j++)
+        for(int i=0; i<image->getWidth(); i++){
+            max=0;
+            min=INT_MAX;
+            for(int b=0; b<3; b++){
+                if(Map[j][i][b]>max)
+                    max=Map[j][i][b];
+                if(Map[j][i][b]<min)
+                    min=Map[j][i][b];
+            }
+            //Uso una formula veloce per la desaturazione del colore
+            gray=(max+min)/2;
+            for(int b=0; b<3; b++)
+                Map[j][i][b]=gray;
         }
     image->editPMap(Map);
 }

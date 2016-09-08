@@ -13,7 +13,7 @@ using namespace std;
 
 int main(int argc, char *argv[]){
     if(argc<4){
-        cout<< "not enougth arguments, at list 4 needed"<<endl;
+        cout<< "Not enough arguments, at least 4 are needed"<<endl;
         exit(0);
     }
     string command=argv[2];
@@ -28,10 +28,10 @@ int main(int argc, char *argv[]){
                 try {
                     range = stoi(argv[4]);
                     if (range < 1) {
-                        throw std::invalid_argument("must be bigger than 0");
+                        throw std::invalid_argument("Must be bigger than 0");
                     }
                     if (range > 10) {
-                        cout << "with a range bigger than 10, operation become really slow" << endl;
+                        cout << "With a range bigger than 10 the operation becomes really slow" << endl;
                     }
                 }
                 catch (invalid_argument e) {
@@ -72,7 +72,7 @@ int main(int argc, char *argv[]){
                         with= stoi(argv[3]);
                         height= stoi(argv[4]);
                     }catch (invalid_argument e){
-                        cout << "invalid arguments for height or/and width"<<endl;
+                        cout << "Invalid arguments for height and/or width"<<endl;
                     }
                     ImageResizer::resize(img,with,height);
                 }else{
