@@ -7,20 +7,33 @@
 #include "imageresizer.h"
 #include "simplefilters.h"
 #include "bpmFactory.h"
+#include "Test.h"
 #include <stdexcept>
 #include <cstdlib>
 
 using namespace std;
 
 int main(int argc, char *argv[]){
-    if(argc<4){
+    if(argc<3){
         cout<< "Not enough arguments, at least 4 are needed"<<endl;
         exit(0);
+    }
+    if(argc==3){
+        string command=argv[1];
+        if(command=="test") {
+            Test::test(argv[2]);
+        }
     }
     string command=argv[2];
     cout <<command<<endl;
     BmpImage *img= bpmFactory::buildImg(argv[1]);
     switch(argc) {
+        case 3:{
+            command=argv[1];
+            if(command=="test") {
+                Test::test(argv[2]);
+            }
+        }
         case 6: {
             if (command == "blur" || command == "sharpen" || command == "edge") {
                 string streght = argv[3];
@@ -144,6 +157,6 @@ int main(int argc, char *argv[]){
             break;
         }
     }
-    exit(0);
+
 }
 
