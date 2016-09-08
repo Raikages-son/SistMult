@@ -5,7 +5,7 @@ simpleFilters::simpleFilters()
 
 }
 
-static void changeLight(Bmp24bpp* image, int scale){
+void simpleFilters::changeLight(Bmp24bpp* image, int scale){
     //Variabili ausiliarie per controllo limiti di luminosità e manipolazione immagine
     unsigned int color;
     unsigned char*** Map = image->getMap();
@@ -29,7 +29,7 @@ static void changeLight(Bmp24bpp* image, int scale){
     image->editPMap(Map);
 }
 
-static void changeLight(Bmp8bpp* image, int scale){
+void simpleFilters::changeLight(Bmp8bpp* image, int scale){
 
     unsigned int pixel;
     unsigned char** Map = image->getMap();
@@ -51,7 +51,7 @@ static void changeLight(Bmp8bpp* image, int scale){
     image->editPMap(Map);
 }
 
-static void changeContrast(Bmp24bpp* image){
+void simpleFilters::changeContrast(Bmp24bpp* image){
 
     int color;
     unsigned char*** Map = image->getMap();
@@ -74,7 +74,7 @@ static void changeContrast(Bmp24bpp* image){
     image->editPMap(Map);
 }
 
-static void changeContrast(Bmp8bpp* image){
+void simpleFilters::changeContrast(Bmp8bpp* image){
 
     int pixel;
     unsigned char** Map = image->getMap();
@@ -95,7 +95,7 @@ static void changeContrast(Bmp8bpp* image){
     image->editPMap(Map);
 }
 
-static void changeGamma(Bmp24bpp* image, int scale){
+void simpleFilters::changeGamma(Bmp24bpp* image, int scale){
 
     int color;
     unsigned char*** Map = image->getMap();
@@ -117,7 +117,7 @@ static void changeGamma(Bmp24bpp* image, int scale){
     image->editPMap(Map);
 }
 
-static void changeGamma(Bmp8bpp* image, int scale){
+void simpleFilters::changeGamma(Bmp8bpp* image, int scale){
 
     int pixel;
     unsigned char** Map = image->getMap();
