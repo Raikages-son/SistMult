@@ -3,7 +3,21 @@
 ConvolutionMatrix::ConvolutionMatrix(){
 
 }
+void ConvolutionMatrix::applyMask(BmpImage *image, int **Matrix, int range) {
+    Bmp24bpp* image24Bpp= dynamic_cast < Bmp24bpp* > ( image );
+    Bmp8bpp* image8Bpp=dynamic_cast < Bmp8bpp* > ( image );
+    if(image24Bpp!= NULL){
+        applyMask(image24Bpp,Matrix,range);
+    }else{
+        if(image8Bpp!= NULL){
+            applyMask(image8Bpp,Matrix,range);
+        }else{
+            cout<<"unsupported image type";
+            exit(0);
+        }
 
+    }
+}
 void ConvolutionMatrix::applyMask(Bmp24bpp *image,int** Matrix, int range){
 if(range < 1){
     cout << "Range of convolution matrix must be greater than zero" << endl;

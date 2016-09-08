@@ -9,6 +9,9 @@ class Mirror
 {
 public:
     Mirror();
+    static void horizontalMirroring(BmpImage* image);
+    static void verticalMirroring(BmpImage* image);
+    static void diagonalMirroring(BmpImage* image);
     static void horizontalMirroring(Bmp24bpp* image);
     static void verticalMirroring(Bmp24bpp* image);
     static void diagonalMirroring(Bmp24bpp* image);

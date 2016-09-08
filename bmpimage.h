@@ -36,7 +36,7 @@ protected:
 public:
     BmpImage(const char* Path);
 
-    void save(const char* Path);
+    virtual void save(const char* Path);
 
     unsigned int getWidth(){return width;}
     unsigned int getHeight(){return height;}

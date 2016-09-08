@@ -6,8 +6,12 @@
 #define SISTMULT_BPMFACTORY_H
 
 
-class bpmFactory {
+#include "bmpimage.h"
 
+class bpmFactory {
+public:
+    bpmFactory();
+    static BmpImage* buildImg(const char *Path);
 };
 
 

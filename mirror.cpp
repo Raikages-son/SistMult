@@ -4,6 +4,54 @@ Mirror::Mirror(){
 
 }
 
+void Mirror::horizontalMirroring(BmpImage* image){
+    Bmp24bpp* image24Bpp= dynamic_cast < Bmp24bpp* > ( image );
+    Bmp8bpp* image8Bpp=dynamic_cast < Bmp8bpp* > ( image );
+    if(image24Bpp!= NULL){
+        horizontalMirroring(image24Bpp);
+    }else{
+        if(image8Bpp!= NULL){
+            horizontalMirroring(image8Bpp);
+        }else{
+            cout<<"unsupported image type";
+            exit(0);
+        }
+
+    }
+}
+
+void Mirror::verticalMirroring(BmpImage* image){
+    Bmp24bpp* image24Bpp= dynamic_cast < Bmp24bpp* > ( image );
+    Bmp8bpp* image8Bpp=dynamic_cast < Bmp8bpp* > ( image );
+    if(image24Bpp!= NULL){
+        verticalMirroring(image24Bpp);
+    }else{
+        if(image8Bpp!= NULL){
+            verticalMirroring(image8Bpp);
+        }else{
+            cout<<"unsupported image type";
+            exit(0);
+        }
+
+    }
+}
+
+void Mirror::diagonalMirroring(BmpImage* image){
+    Bmp24bpp* image24Bpp= dynamic_cast < Bmp24bpp* > ( image );
+    Bmp8bpp* image8Bpp=dynamic_cast < Bmp8bpp* > ( image );
+    if(image24Bpp!= NULL){
+        diagonalMirroring(image24Bpp);
+    }else{
+        if(image8Bpp!= NULL){
+            diagonalMirroring(image8Bpp);
+        }else{
+            cout<<"unsupported image type";
+            exit(0);
+        }
+
+    }
+}
+
 void Mirror::horizontalMirroring(Bmp24bpp* image){
     // Prendo l'altezza della mappa in pixel
     int imageH = image->getHeight();

@@ -8,6 +8,7 @@
 class ConvolutionMatrix{
 public:
     ConvolutionMatrix();
+    static void applyMask(BmpImage *image,int** Matrix,int range);
     static void applyMask(Bmp24bpp *image,int** Matrix,int range);
     static void applyMask(Bmp8bpp *image,int** Matrix,int range);
 };

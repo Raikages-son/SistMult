@@ -6,6 +6,7 @@
 #include "Matrix.h"
 #include "imageresizer.h"
 #include "simplefilters.h"
+#include "bpmFactory.h"
 #include <stdexcept>
 #include <cstdlib>
 
@@ -18,8 +19,7 @@ int main(int argc, char *argv[]){
     }
     string command=argv[2];
     cout <<command<<endl;
-    Bmp24bpp bmp = Bmp24bpp(argv[1]);
-    Bmp24bpp *img=  &bmp;
+    BmpImage *img= bpmFactory::buildImg(argv[1]);
     switch(argc) {
         case 6: {
             if (command == "blur" || command == "sharpen" || command == "edge") {
@@ -119,10 +119,22 @@ int main(int argc, char *argv[]){
             break;
         }
         case 4:{
-            if(command=="mirror"){
+            if(command=="horizontalmirroring"){
                 Mirror::horizontalMirroring(img);
             }else {
-                    cout << "unknown 3 arguments command: " << command << endl;
+                if (command == "desaturate") {
+                    simpleFilters::desaturate(img);
+                } else {
+                    if (command == "verticalmirroring") {
+                        Mirror::verticalMirroring(img);
+                    } else {
+                        if (command == "diagonalmirroring") {
+                            Mirror::diagonalMirroring(img);
+                        } else {
+                            cout << "unknown 3 arguments command: " << command << endl;
+                        }
+                    }
+                }
             }
             img->save(argv[3]);
             break;

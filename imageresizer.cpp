@@ -5,6 +5,22 @@ ImageResizer::ImageResizer(){
 
 }
 
+void ImageResizer::resize(BmpImage *image, const int &newWidth, const int &newHeight) {
+    Bmp24bpp* image24Bpp= dynamic_cast < Bmp24bpp* > ( image );
+    Bmp8bpp* image8Bpp=dynamic_cast < Bmp8bpp* > ( image );
+    if(image24Bpp!= NULL){
+        resize(image24Bpp,newWidth,newHeight);
+    }else{
+        if(image8Bpp!= NULL){
+            resize(image8Bpp,newWidth,newHeight);
+        }else{
+            cout<<"unsupported image type";
+            exit(0);
+        }
+
+    }
+}
+
 void ImageResizer::resize(Bmp24bpp* image,const int& newWidth ,const int& newHeight){
 if(newWidth <=0 || newHeight<=0){
     cout << "New sizes must be greater than zero" << endl;
