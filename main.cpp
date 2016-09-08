@@ -23,7 +23,9 @@ int main(int argc, char *argv[]){
     BmpImage *img;
     if(argc>2){
         command=argv[2];
-        img= bpmFactory::buildImg(argv[1]);
+        if(argc>3) {
+            img = bpmFactory::buildImg(argv[1]);
+        }
     }else{
         command=argv[1];
     }

@@ -14,10 +14,10 @@ void Help::help() {
     cout<<"  the first argument is a path to a folder containing a test.bpm image and a testResult folder, you can use the project folder"<<endl;
     cout<<endl;
 
-    cout<<" <path> <convolution matrix filter> <strength> <range> <path> :"<<endl;
+    cout<<" <path> <convolution matrix filter> <variant> <range> <path> :"<<endl;
     cout<<"  the first argument is the path to the image to be edited"<<endl;
     cout<<"  the second argument is the filter to apply to the image, the available are: blur sharpen edge"<<endl;
-    cout<<"  the third argument is the strength of the filter, "<<endl;
+    cout<<"  the third argument is the variant of the filter, 1 or 2 for blur and sharpen, 1 to 3 for edge"<<endl;
     cout<<"  the fourth argument is the range of the matrix,values over 10 are really slow to compute"<<endl;
     cout<<"  the fifth argument is the path to the output.bpm edited image"<<endl;
     cout<<endl;
