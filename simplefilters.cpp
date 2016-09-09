@@ -214,21 +214,13 @@ void simpleFilters::desaturate(BmpImage *baseimage)
     }
     //Varaibili ausiliarie
     unsigned char*** Map = image->getMap();
-    int gray, min, max;
+    int gray;
 
     for(int j=0; j<image->getHeight(); j++)
         for(int i=0; i<image->getWidth(); i++){
-            max=0;
-            min=INT_MAX;
-            for(int b=0; b<3; b++){
-                if(Map[j][i][b]>max)
-                    max=Map[j][i][b];
-                if(Map[j][i][b]<min)
-                    min=Map[j][i][b];
-            }
-            //Uso una formula veloce per la desaturazione del colore
-            //Calcolo tinta minima e tinta massima per estrarre un "grigio medio" corretto
-            gray=(max+min)/2;
+            //Uso una formula efficace per la desaturazione del colore
+            //Calcolo il valore di grigio corretto in base alla reazione dell'occhio umano ai singoli colori
+            gray=(Map[j][i][0]*0.11)+(Map[j][i][1]*0.59)+(Map[j][i][2]*0.3);
             for(int b=0; b<3; b++)
                 Map[j][i][b]=gray;
         }
