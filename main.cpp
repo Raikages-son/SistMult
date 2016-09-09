@@ -57,7 +57,7 @@ int main(int argc, char *argv[]){
                         throw std::invalid_argument("Must be bigger than 0");
                     }
                     if (range > 10) {
-                        cout << "With a range bigger than 10 the operation becomes really slow" << endl;
+                        cout << "With a range bigger than 10 the operation becomes slow" << endl;
                     }
                 }
                 catch (invalid_argument e) {
@@ -155,7 +155,15 @@ int main(int argc, char *argv[]){
                         if (command == "diagonalmirroring") {
                             Mirror::diagonalMirroring(img);
                         } else {
-                            cout << "unknown 3 arguments command: " << command << endl;
+                            if(command == "grayscale"){
+                                Bmp24bpp* image24Bpp= dynamic_cast < Bmp24bpp* > ( img );
+                                if(image24Bpp == NULL){
+                                    cout<< "source image is not 24 bit per pixel"<<endl;
+                                    break;
+                                } else{
+                                    img = image24Bpp->to8bpp();
+                                }
+                            } else cout << "unknown 3 arguments command: " << command << endl;
                         }
                     }
                 }

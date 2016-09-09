@@ -16,9 +16,12 @@ void Help::help() {
 
     cout<<" <path> <convolution matrix filter> <variant> <range> <path> :"<<endl;
     cout<<"  The first argument is the path to the image to be edited"<<endl;
-    cout<<"  The second argument is the filter to apply to the image, the available ones are: blur sharpen edge"<<endl;
+    cout<<"  The second argument is the filter to apply to the image, the available ones are: "<<endl;
+    cout<<"  -  blur "<<endl;
+    cout<<"  -  sharpen"<<endl;
+    cout<<"  -  edge"<<endl;
     cout<<"  The third argument is the variant of the filter, 1 or 2 for blur and sharpen, 1 to 3 for edge"<<endl;
-    cout<<"  The fourth argument is the range of the matrix, values over 10 are really slow to compute"<<endl;
+    cout<<"  The fourth argument is the range of the matrix, values over 10 are slow to compute"<<endl;
     cout<<"  The fifth argument is the path to the output.bmp edited image"<<endl;
     cout<<endl;
 
@@ -34,16 +37,30 @@ void Help::help() {
     cout<<" <path> <scale filter> <scale> <path> :"<<endl;
     cout<<"  The first argument is the path to the image to be edited"<<endl;
     cout<<"  The second argument is the filter to apply to the image, the available are: "<<endl;
-    cout<<"   light, that takes values from -255 to 255"<<endl;
-    cout<<"   gamma, that takes values from 0 to 8"<<endl;
-    cout<<"   contrast, that takes scale form 0 to 128"<<endl;
+    cout<<"  -  light, that takes values from -255 to 255"<<endl;
+    cout<<"  -  gamma, that takes values from 0 to 8"<<endl;
+    cout<<"  -  contrast, that takes scale form 0 to 128"<<endl;
     cout<<"  The third argument is the path to the output.bmp edited image"<<endl;
     cout<<endl;
 
     cout<<" <path> <simple filter> <path> :"<<endl;
     cout<<"  The first argument is the path to the image to be edited"<<endl;
-    cout<<"  The second argument is the filter to apply to the image, the available are: horizontalmirroring, diagonalmirroring, verticalmirroring, desaturate"<<endl;
-    cout<<"     Note that the desaturate command is only available for 24bpp images"<<endl;
+    cout<<"  The second argument is the filter to apply to the image:"<<endl;
+    cout<<"  -  horizontalmirroring"<<endl;
+    cout<<"  -  diagonalmirroring"<<endl;
+    cout<<"  -  verticalmirroring"<<endl;
+    cout<<"  -  desaturate"<<endl;
+    cout<<"  Note that the desaturate command is only available for 24bpp images"<<endl;
+    cout<<"  The third argument is the path to the output.bmp edited image"<<endl;
+    cout<<endl;
+    exit(0);
+
+
+    cout<<" <path> <grayscale> <path> :"<<endl;
+    cout<<"  The first argument is the path to the image to be edited"<<endl;
+    cout<<"  The second argument is  \"grayscale\""<<endl;
+    cout<<"  This will turn the source image into an 8 bit per pixel bitmap in gray scale"<<endl;
+    cout<<"  Note that the grayscale command can only be executed on a 24 bit per pixel bitmap"<<endl;
     cout<<"  The third argument is the path to the output.bmp edited image"<<endl;
     cout<<endl;
     exit(0);
