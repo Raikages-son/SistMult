@@ -15,6 +15,10 @@ Matrix::Matrix() {}
  *  1  0  0  0 -1
 */
 int** Matrix::getEdgeDetection1(int range) {
+    // controllo il raggio
+    if(range < 1){
+        cout << "matrix range must be greater than zero";
+    }
     // calcolo la dimensione
     int size=range*2+1;
     // inizializzazione matrice
@@ -48,6 +52,10 @@ int** Matrix::getEdgeDetection1(int range) {
  *  0  0 -1  0  0
 */
 int** Matrix::getEdgeDetection2(int range) {
+    // controllo il raggio
+    if(range < 1){
+        cout << "matrix range must be greater than zero";
+    }
     // calcolo la dimensione
     int size=range*2+1;
     // inizializzazione matrice
@@ -90,6 +98,10 @@ int** Matrix::getEdgeDetection2(int range) {
 */
 
 int** Matrix::getEdgeDetection3(int range) {
+    // controllo il raggio
+    if(range < 1){
+        cout << "matrix range must be greater than zero";
+    }
     // calcolo la dimensione
     int size=range*2+1;
     // inizializzazione matrice
@@ -110,7 +122,7 @@ int** Matrix::getEdgeDetection3(int range) {
 }
 
 
-/*  Edge Blur 1. Esempio matrice di raggio 2
+/*  Blur 1. Esempio matrice di raggio 2
  *
  *  1  1  1  1  1
  *  1  1  1  1  1
@@ -119,6 +131,10 @@ int** Matrix::getEdgeDetection3(int range) {
  *  1  1  1  1  1
 */
 int** Matrix::getBlur1(int range) {
+    // controllo il raggio
+    if(range < 1){
+        cout << "matrix range must be greater than zero";
+    }
     // calcolo la dimensione
     int size=range*2+1;
     // inizializzazione matrice
@@ -136,6 +152,53 @@ int** Matrix::getBlur1(int range) {
     return matrix;
 }
 
+/*  Blur 2. Esempio matrice di raggio 2
+ *
+ *  1  1  1  1  1
+ *  1  0  0  0  1
+ *  1  0  0  0  1
+ *  1  0  0  0  1
+ *  1  1  1  1  1
+*/
+int** Matrix::getBlur2(int range) {
+    // controllo il raggio
+    if(range < 1){
+        cout << "matrix range must be greater than zero";
+    }
+    // calcolo la dimensione
+    int size=range*2+1;
+    // esponente
+    int centerExp = range*2;
+    // inizializzazione matrice
+    int** matrix=new int*[size];
+    // scorro le righe
+    for(int j=0; j<size;j++){
+        // inizializzo le righe
+        matrix[j]=new int[size];
+        // scorro le colonne
+        for(int i=0; i<size;i++){
+          // se è la prima o l'ultima riga imposto tutti gli elementi a uno
+          if(j == 0 || j == size-1){
+              matrix[j][i]=1;
+          }
+          // altrimenti
+          else{
+            // inizializzo tutta la riga a 0
+            matrix[j][i]=0;
+            // inizializzo il primo e l'ultimo elemento a 1
+            matrix[j][0]=1;
+            matrix[j][size-1] = 1;
+          }
+        }
+
+    }
+
+    // ritorno la matrice
+    return matrix;
+}
+
+
+
 
 /*  Sharp 1. Esempio matrice di raggio 1
  *
@@ -145,6 +208,10 @@ int** Matrix::getBlur1(int range) {
 */
 
 int** Matrix::getSharp1(int range) {
+    // controllo il raggio
+    if(range < 1){
+        cout << "matrix range must be greater than zero";
+    }
     // calcolo la dimensione
     int size=range*2+1;
     // inizializzazione matrice
@@ -185,6 +252,10 @@ int** Matrix::getSharp1(int range) {
 */
 
 int** Matrix::getSharp2(int range) {
+    // controllo il raggio
+    if(range < 1){
+        cout << "matrix range must be greater than zero";
+    }
     // calcolo la dimensione
     int size=range*2+1;
     // inizializzazione matrice

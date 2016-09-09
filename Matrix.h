@@ -5,8 +5,6 @@
 #ifndef SISTMULT_MATRIX_H
 #define SISTMULT_MATRIX_H
 
-#include <math.h>
-
 class Matrix {
 public:
     Matrix();
@@ -14,6 +12,7 @@ public:
     static int** getEdgeDetection2(int range);
     static int** getEdgeDetection3(int range);
     static int** getBlur1(int range);
+    static int** getBlur2(int range);
     static int** getSharp1(int range);
     static int** getSharp2(int range);
 
