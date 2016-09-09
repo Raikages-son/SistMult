@@ -23,7 +23,7 @@ void Test::test(string basepath) {
     img->save(outpath);
 
     img=bpmFactory::buildImg(charpath);
-    ConvolutionMatrix::applyMask(img, Matrix::getBlur2(1), 1);
+    //ConvolutionMatrix::applyMask(img, Matrix::getBlur2(1), 1);
     path=basepath;
     outpath=strdup(path.append("/testResult/getBlur2.bmp").c_str());
     img->save(outpath);

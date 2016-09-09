@@ -2,13 +2,13 @@
 
 BmpImage::BmpImage(const char *Path){
     FILE *file;
-    // apertura del file e controllo esistenza
+    //Apertura del file e controllo esistenza
     if ((file=fopen(Path,"rb"))==NULL ){
         cout << "File not found" << endl;
         exit(1);
     }
 
-    // input dei dati del fileheader
+    //Input dei dati del fileheader
     fseek(file,0,0);
     fread(&type,sizeof(short),1, file);
     fread(&fileSize,sizeof(int),1, file);
@@ -16,7 +16,7 @@ BmpImage::BmpImage(const char *Path){
     fread(&offBytes,sizeof(int),1, file);
 
 
-    // input dei dati dell'infoheader
+    //Input dei dati dell'infoheader
 
     fread(&infoSize,sizeof(int),1,file);
     fread(&width,sizeof(int),1, file);
@@ -30,13 +30,13 @@ BmpImage::BmpImage(const char *Path){
     fread(&usedColors,sizeof(int),1, file);
     fread(&importantColors,sizeof(int),1, file);
 
-    // input dell' eventuale palette
+    //Input dell' eventuale palette
 
     PALETTE = new unsigned char[offBytes-headerSize];
 
     fread(PALETTE,sizeof(char),(offBytes-headerSize),file);
 
-    // input della mappa dei pixel
+    //Input della mappa dei pixel
 
     fclose(file);
 }
@@ -49,7 +49,7 @@ void BmpImage::save(const char *Path){
     }
 
 
-    // output dei dati del fileheader
+    //Output dei dati del fileheader
     fseek(file,0,0);
     fwrite(&type,sizeof(short),1, file);
     fwrite(&fileSize,sizeof(int),1, file);
@@ -57,7 +57,7 @@ void BmpImage::save(const char *Path){
     fwrite(&offBytes,sizeof(int),1, file);
 
 
-    // output dei dati dell'infoheader
+    //Output dei dati dell'infoheader
 
     fwrite(&infoSize,sizeof(int),1,file);
     fwrite(&width,sizeof(int),1, file);
@@ -71,7 +71,7 @@ void BmpImage::save(const char *Path){
     fwrite(&usedColors,sizeof(int),1, file);
     fwrite(&importantColors,sizeof(int),1, file);
 
-    // output della palette
+    //Output della palette
 
     fwrite(PALETTE, sizeof(char), offBytes-headerSize,file);
 
@@ -79,7 +79,7 @@ void BmpImage::save(const char *Path){
 
 }
 
-// funzione che calcola il numero di byte di padding
+//Funzione che calcola il numero di byte di padding
 int BmpImage::getPadding(){
     int byteWidth = width*(bpp/8);
 
@@ -110,6 +110,7 @@ void BmpImage::printInfo(){
     cout << "Colori principali:           " << importantColors << endl<<endl;
 }
 
+//Funzione che corregge i dati di resize nell'header
 void BmpImage::resize(const unsigned int& newWidth,const unsigned int& newHeight){
     width = newWidth;
     height = newHeight;

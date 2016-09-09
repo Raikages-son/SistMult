@@ -53,19 +53,19 @@ void Mirror::diagonalMirroring(BmpImage* image){
 }
 
 void Mirror::horizontalMirroring(Bmp24bpp* image){
-    // Prendo l'altezza della mappa in pixel
+    //Prendo l'altezza della mappa in pixel
     int imageH = image->getHeight();
 
-    // Prendo la larghezza della mappa in pixel
+    //Prendo la larghezza della mappa in pixel
     int imageW = image->getWidth();
 
-    // ;etto un puntatore all'inizio della mappa di byte dell'immagine
+    //Metto un puntatore all'inizio della mappa di byte dell'immagine
     unsigned char*** Map = image->getMap();
 
     //Pixel ausiliario
     unsigned char *Aux=new unsigned char[3];
 
-    //Scorro solo metà delle colonne
+    //Scorro solo metà delle colonne; scorrerle tutte annullerebbe l'effetto
     for(int j=0; j<imageH; j++)
         for(int i=0; i<(imageW/2); i++)
             for(int b=0; b<3; b++){
@@ -80,19 +80,19 @@ void Mirror::horizontalMirroring(Bmp24bpp* image){
 }
 
 void Mirror::verticalMirroring(Bmp24bpp* image){
-    // prendo l'altezza della mappa in pixel
+    //Prendo l'altezza della mappa in pixel
     int imageH = image->getHeight();
 
-    // prendo la larghezza della mappa in pixel
+    //Prendo la larghezza della mappa in pixel
     int imageW = image->getWidth();
 
-    // metto un puntatore all'inizio della mappa di byte dell'immagine
+    //Metto un puntatore all'inizio della mappa di byte dell'immagine
     unsigned char*** Map = image->getMap();
 
     //Pixel ausiliario
     unsigned char *Aux=new unsigned char[3];
 
-    //Scorro solo metà delle righe
+    //Scorro solo metà delle righe; scorrerle tutte annullerebbe l'effetto
     for(int j=0; j<(imageH/2); j++)
         for(int i=0; i<imageW; i++)
             for(int b=0; b<3; b++){
@@ -107,19 +107,19 @@ void Mirror::verticalMirroring(Bmp24bpp* image){
 }
 
 void Mirror::diagonalMirroring(Bmp24bpp *image){
-    // prendo l'altezza della mappa in pixel
+    //Prendo l'altezza della mappa in pixel
     int imageH = image->getHeight();
 
-    // prendo la larghezza della mappa in pixel
+    //Prendo la larghezza della mappa in pixel
     int imageW = image->getWidth();
 
-    // metto un puntatore all'inizio della mappa di byte dell'immagine
+    //Metto un puntatore all'inizio della mappa di byte dell'immagine
     unsigned char*** Map = image->getMap();
 
     //Pixel ausiliario
     unsigned char *Aux=new unsigned char[3];
 
-    //Scorro solo metà delle righe
+    //Scorro solo metà delle righe; scorrere metà delle colonne non cambia il risultato
     for(int j=0; j<imageH; j++)
         for(int i=0; i<(imageW/2); i++)
             for(int b=0; b<3; b++){
@@ -134,19 +134,19 @@ void Mirror::diagonalMirroring(Bmp24bpp *image){
 }
 
 void Mirror::horizontalMirroring(Bmp8bpp* image){
-    // Prendo l'altezza della mappa in pixel
+    //Prendo l'altezza della mappa in pixel
     int imageH = image->getHeight();
 
-    // Prendo la larghezza della mappa in pixel
+    //Prendo la larghezza della mappa in pixel
     int imageW = image->getWidth();
 
-    // ;etto un puntatore all'inizio della mappa di byte dell'immagine
+    //Metto un puntatore all'inizio della mappa di byte dell'immagine
     unsigned char** Map = image->getMap();
 
     //Pixel ausiliario
     unsigned char *Aux=new unsigned char;
 
-    //Scorro solo metà delle colonne
+    //Scorro solo metà delle colonne; scorrerle tutte annullerebbe l'effetto
     for(int j=0; j<imageH; j++)
         for(int i=0; i<imageW/2; i++){
                 //Carico pixel ausiliario
@@ -160,19 +160,19 @@ void Mirror::horizontalMirroring(Bmp8bpp* image){
 }
 
 void Mirror::verticalMirroring(Bmp8bpp* image){
-    // prendo l'altezza della mappa in pixel
+    //Prendo l'altezza della mappa in pixel
     int imageH = image->getHeight();
 
-    // prendo la larghezza della mappa in pixel
+    //Prendo la larghezza della mappa in pixel
     int imageW = image->getWidth();
 
-    // metto un puntatore all'inizio della mappa di byte dell'immagine
+    //Metto un puntatore all'inizio della mappa di byte dell'immagine
     unsigned char** Map = image->getMap();
 
     //Pixel ausiliario
     unsigned char *Aux=new unsigned char;
 
-    //Scorro solo metà delle righe
+    //Scorro solo metà delle righe; scorrerle tutte annullerebbe l'effetto
     for(int j=0; j<(imageH/2); j++)
         for(int i=0; i<imageW; i++){
                 //Carico pixel ausiliario
@@ -186,19 +186,19 @@ void Mirror::verticalMirroring(Bmp8bpp* image){
 }
 
 void Mirror::diagonalMirroring(Bmp8bpp *image){
-    // prendo l'altezza della mappa in pixel
+    //Prendo l'altezza della mappa in pixel
     int imageH = image->getHeight();
 
-    // prendo la larghezza della mappa in pixel
+    //Prendo la larghezza della mappa in pixel
     int imageW = image->getWidth();
 
-    // metto un puntatore all'inizio della mappa di byte dell'immagine
+    //Metto un puntatore all'inizio della mappa di byte dell'immagine
     unsigned char** Map = image->getMap();
 
     //Pixel ausiliario
     unsigned char *Aux=new unsigned char;
 
-    //Scorro solo metà delle righe
+    //Scorro solo metà delle righe; scorrere metà delle colonne non cambia il risultato
     for(int j=0; j<imageH; j++)
         for(int i=0; i<(imageW/2); i++){
                 //Carico pixel ausiliario

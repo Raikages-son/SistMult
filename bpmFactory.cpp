@@ -7,9 +7,11 @@
 #include "bmp24bpp.h"
 
 bpmFactory::bpmFactory() {}
+
+//Funzione che controlla i bpp dell'immagine caricata e costruisce l'oggetto immagine corretto
 BmpImage* bpmFactory::buildImg(const char *Path) {
     FILE *file;
-    // apertura del file e controllo esistenza
+    //Apertura del file e controllo esistenza
     if ((file=fopen(Path,"rb"))==NULL ){
         cout << "File not found" << endl;
         exit(1);

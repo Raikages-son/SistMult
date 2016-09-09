@@ -5,6 +5,7 @@ ImageResizer::ImageResizer(){
 
 }
 
+//Determino quale delle funzioni utilizzare in base al tipo di immagine
 void ImageResizer::resize(BmpImage *image, const int &newWidth, const int &newHeight) {
     Bmp24bpp* image24Bpp= dynamic_cast < Bmp24bpp* > ( image );
     Bmp8bpp* image8Bpp=dynamic_cast < Bmp8bpp* > ( image );
@@ -21,95 +22,85 @@ void ImageResizer::resize(BmpImage *image, const int &newWidth, const int &newHe
     }
 }
 
+//Resize per immagini a 24b
 void ImageResizer::resize(Bmp24bpp* image,const int& newWidth ,const int& newHeight){
-if(newWidth <=0 || newHeight<=0){
-    cout << "New sizes must be greater than zero" << endl;
+    if(newWidth <=0 || newHeight<=0){
+        cout << "New sizes must be greater than zero" << endl;
+    }
+    else{
+        //Mappa originale
+        unsigned char***Src = image->getMap();
+
+        double prevW = image->getWidth();
+        double prevH = image->getHeight();
+
+        //Fattore < 1 significa allargamento
+        double factorW = prevW/newWidth;
+        double factorH = prevH/newHeight;
+
+        unsigned char*** Temp = new unsigned char **[newHeight];
+        for(int j=0; j<newHeight;j++){
+            Temp[j] = new unsigned char*[newWidth];
+            int up = floor(j*factorH);
+            int down = ceil((j+1)*factorH);
+            for(int i=0; i< newWidth ;i++){
+                Temp[j][i] = new unsigned char[3];
+                int sx = floor(i*factorW);
+                int dx = ceil((i+1)*factorW);
+                for(int p=0; p<3; p++){
+                    int num = 0;
+                    int sum =0;
+                    for(int y=up; y<down; y++)
+                        for(int x=sx; x<dx; x++){
+                            num++;
+                            sum += Src[y][x][p];
+                        }
+                    sum = sum/num;
+                    Temp[j][i][p]=sum;
+                }
+            }
+        }
+        image->resize(newWidth,newHeight);
+        image->editPMap(Temp);
+    }
 }
-else{
-    // Mappa originale
-    unsigned char***Src = image->getMap();
 
-    double prevW = image->getWidth();
-    double prevH = image->getHeight();
+//Resize per immagini a 8b
+void ImageResizer::resize(Bmp8bpp* image,const int& newWidth ,const int& newHeight){
+    if(newWidth <=0 || newHeight<=0){
+        cout << "New sizes must be greater than zero" << endl;
+    }
+    else{
+        // Mappa originale
+        unsigned char**Src = image->getMap();
 
-    // fattore < 1 significa allargamento
-    double factorW = prevW/newWidth;
-    double factorH = prevH/newHeight;
+        double prevW = image->getWidth();
+        double prevH = image->getHeight();
 
-    unsigned char*** Temp = new unsigned char **[newHeight];
-    for(int j=0; j<newHeight;j++){
-        Temp[j] = new unsigned char*[newWidth];
-        int up = floor(j*factorH);
-        int down = ceil((j+1)*factorH);
-      //  cout << "UP " << up << " Down " <<down<<endl;
-        for(int i=0; i< newWidth ;i++){
-            Temp[j][i] = new unsigned char[3];
-            int sx = floor(i*factorW);
-            int dx = ceil((i+1)*factorW);
-         //   cout << "DX " << dx << " SX " <<sx << endl;
+        //Fattore < 1 significa allargamento
+        double factorW = prevW/newWidth;
+        double factorH = prevH/newHeight;
 
-            for(int p=0; p<3; p++){
+        unsigned char** Temp = new unsigned char *[newHeight];
+        for(int j=0; j<newHeight;j++){
+            Temp[j] = new unsigned char[newWidth];
+            int up = floor(j*factorH);
+            int down = ceil((j+1)*factorH);
+            for(int i=0; i< newWidth ;i++){
+                int sx = floor(i*factorW);
+                int dx = ceil((i+1)*factorW);
                 int num = 0;
                 int sum =0;
-                for(int y=up; y<down; y++){
+                for(int y=up; y<down; y++)
                     for(int x=sx; x<dx; x++){
                         num++;
-                        sum += Src[y][x][p];
+                        sum += Src[y][x];
                     }
-                }
                 sum = sum/num;
-
-                Temp[j][i][p]=sum;
+                Temp[j][i]=sum;
             }
         }
+        image->resize(newWidth,newHeight);
+        image->editPMap(Temp);
     }
-
-    image->resize(newWidth,newHeight);
-
-    image->editPMap(Temp);
-}
-}
-
-void ImageResizer::resize(Bmp8bpp* image,const int& newWidth ,const int& newHeight){
-if(newWidth <=0 || newHeight<=0){
-cout << "New sizes must be greater than zero" << endl;
-}
-else{
-    // Mappa originale
-    unsigned char**Src = image->getMap();
-
-    double prevW = image->getWidth();
-    double prevH = image->getHeight();
-
-    // fattore < 1 significa allargamento
-    double factorW = prevW/newWidth;
-    double factorH = prevH/newHeight;
-
-    unsigned char** Temp = new unsigned char *[newHeight];
-    for(int j=0; j<newHeight;j++){
-        Temp[j] = new unsigned char[newWidth];
-        int up = floor(j*factorH);
-        int down = ceil((j+1)*factorH);
-        for(int i=0; i< newWidth ;i++){
-            int sx = floor(i*factorW);
-            int dx = ceil((i+1)*factorW);
-
-            int num = 0;
-            int sum =0;
-            for(int y=up; y<down; y++){
-                for(int x=sx; x<dx; x++){
-                    num++;
-                    sum += Src[y][x];
-                }
-            }
-            sum = sum/num;
-
-            Temp[j][i]=sum;
-        }
-    }
-
-    image->resize(newWidth,newHeight);
-
-    image->editPMap(Temp);
-}
 }

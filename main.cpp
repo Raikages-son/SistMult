@@ -67,7 +67,7 @@ int main(int argc, char *argv[]){
                     if (strength == "1") {
                         ConvolutionMatrix::applyMask(img, Matrix::getBlur1(range), range);
                     } else {
-                        ConvolutionMatrix::applyMask(img, Matrix::getBlur2(range), range);
+                        //ConvolutionMatrix::applyMask(img, Matrix::getBlur2(range), range);
                     }
                 } else {
                     if (command == "sharpen") {
