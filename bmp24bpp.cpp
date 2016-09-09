@@ -59,7 +59,7 @@ Bmp8bpp *Bmp24bpp::to8bpp(){
         Map8[j] = new unsigned char[width];
         for(int i=0; i<width; i++){
             // il valore è la media delle tre componenti che compongono il pixel
-            Map8[j][i] = (PixelMap[j][i][1]+PixelMap[j][i][2]+PixelMap[j][i][3])/3;
+            Map8[j][i] = (PixelMap[j][i][0]*0.11)+(PixelMap[j][i][1]*0.59)+(PixelMap[j][i][2]*0.3);
         }
     }
 
