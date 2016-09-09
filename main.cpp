@@ -16,7 +16,7 @@ using namespace std;
 
 int main(int argc, char *argv[]){
     if(argc<2){
-        cout<< "Not enough arguments, at least 1 is needed, launch with -help to have all the information about the possible commands and arguments"<<endl;
+        cout<< "Not enough arguments, at least 1 is needed, write help as command to have all the information about the possible commands and arguments"<<endl;
         exit(0);
     }
     string command;
@@ -67,7 +67,7 @@ int main(int argc, char *argv[]){
                     if (strength == "1") {
                         ConvolutionMatrix::applyMask(img, Matrix::getBlur1(range), range);
                     } else {
-                        //ConvolutionMatrix::applyMask(img, Matrix::getBlur2(range), range);
+                        ConvolutionMatrix::applyMask(img, Matrix::getBlur2(range), range);
                     }
                 } else {
                     if (command == "sharpen") {

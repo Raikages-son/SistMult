@@ -52,5 +52,22 @@ void Bmp24bpp::save(const char *Path){
     fclose(file);
 }
 
+Bmp8bpp *Bmp24bpp::to8bpp(){
+    // creo una mappa di pixel a 2 dimensioni
+    unsigned char **Map8 = new unsigned char*[height];
+    for(int j=0; j<height; j++){
+        Map8[j] = new unsigned char[width];
+        for(int i=0; i<width; i++){
+            // il valore è la media delle tre componenti che compongono il pixel
+            Map8[j][i] = (PixelMap[j][i][1]+PixelMap[j][i][2]+PixelMap[j][i][3])/3;
+        }
+    }
+
+    // costruisco un'immagine monocromatica
+    Bmp8bpp *p = new Bmp8bpp(*this,Map8);
+    // ritorno il puntatore
+    return p;
+}
+
 
 

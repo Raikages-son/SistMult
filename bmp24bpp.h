@@ -16,6 +16,7 @@ public:
 
     void editPMap(unsigned char*** map){PixelMap=map;}
 
+    Bmp8bpp* to8bpp();
     /*BmpImage* convert(){
 
         unsigned char** newmap;

@@ -9,6 +9,8 @@ private:
 public:
     Bmp8bpp(const char *Path);
 
+    Bmp8bpp(const BmpImage &header, unsigned char** NewMap);
+
     void save(const char *Path);
 
     unsigned char ** getMap(){return PixelMap;}

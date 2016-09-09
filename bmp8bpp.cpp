@@ -23,6 +23,38 @@ Bmp8bpp::Bmp8bpp(const char *Path): BmpImage(Path){
     fclose(file);
 }
 
+
+// COSTRUTTORE PER CONVERSIONE(solo scala di grigi)
+// header costruito di copia dall'immagine di partenza
+Bmp8bpp::Bmp8bpp(const BmpImage &header, unsigned char **NewMap):BmpImage(header){
+    // costruisco una palette monocromatica
+    unsigned char*Palet =  new unsigned char[1024];
+    // inizializzo le entryes della palette con i numeri da 0 a 255 per tutti i colori
+    for(int i =0; i<256; i++){
+        Palet[i*4] = i;
+        Palet[i*4 +1] = i;
+        Palet[i*4 +2] = i;
+        // byte riservato
+        Palet[i*4 +3] = 0;
+    }
+    // l'offset dell' immagine va impostato a 1078
+    offBytes = 1078;
+    // i bpp devono essere cambiati a 8
+    bpp = 8;
+    // calcolo i byte reali per riga
+    int bpr = width*bpp+getPadding();
+    // aggiorno la dimenzione del file
+    fileSize = offBytes + height*bpr;
+    // aggiorno la dimensione della mappa dei pixels
+    imageSize = fileSize - offBytes;
+
+    // imposto la palette monocromatica
+    changePalette(Palet);
+    // imposto la nuova mappa
+    editPMap(NewMap);
+
+}
+
 void Bmp8bpp::save(const char *Path){
     //Scrivo l'header della nuova immagine
     BmpImage::save(Path);

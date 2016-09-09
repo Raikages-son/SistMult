@@ -49,6 +49,8 @@ public:
 
     void resize(const unsigned int& newWidth,const unsigned int& newHeight);
 
+    void changePalette(unsigned char *newPalette){PALETTE = newPalette;}
+
 };
 
 #endif // BMPIMAGE_H

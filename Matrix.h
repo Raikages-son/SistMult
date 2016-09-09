@@ -5,6 +5,10 @@
 #ifndef SISTMULT_MATRIX_H
 #define SISTMULT_MATRIX_H
 
+#include<iostream>
+
+using namespace::std;
+
 class Matrix {
 public:
     Matrix();
